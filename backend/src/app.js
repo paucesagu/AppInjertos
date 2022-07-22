@@ -1,18 +1,15 @@
-import express from "express";
-import cors from "cors";
-import morgan from "morgan";
+const express= require('express');
+const morgan = require('morgan');   
+const cors = require('cors');
 
-import injertosRoutes from "./routes/injertosRoutes";
-import usuarioRoutes from "./routes/usuariosRoutes";
-import autenticacionRoutes from "./routes/autenticacionRoutes";
-//import reentrenarRoutes from "./routes/reentrenarRoutes";
+const injertosRoutes = require('./routes/injertosRoutes');
+const autenticacionRoutes = require('./routes/autenticacionRoutes');
+const usuariosRoutes = require('./routes/usuariosRoutes');
+const reentrenarRoutes = require('./routes/reentrenarRoutes');
 
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUI from "swagger-ui-express";
-import { options } from "./swaggerOptions";
 
 const app = express();
-const specs = swaggerJSDoc(options);
+
 
 app.set("port", 8000);
 
@@ -23,9 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(autenticacionRoutes);
 app.use(injertosRoutes);
-app.use(usuarioRoutes);
-//app.use(reentrenarRoutes);
+app.use(usuariosRoutes);
+app.use(reentrenarRoutes);
 
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(specs));
 
-export default app;
+module.exports = app;

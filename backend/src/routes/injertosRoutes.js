@@ -9,7 +9,7 @@ router.post('/injertos', injertosController.addInjerto);
 router.get('/injertos/:id', injertosController.getInjerto); 
 router.put('/injertos/:id', injertosController.editInjerto);
 router.get("/injertos/:id/predecir", injertosController.prediccion);
-router.get("/reentrenar", injertosController.reentrenar);
+
 
 
 
