@@ -64,7 +64,7 @@ controller.getUsuarios = async (req, res) => {
       var rol= req.body.rol;
      
       console.log("Entra en las valoraciones");
-      if(dni == null || contraseña == null || email == null || telefono == null || nombre == null || apellidos== null){
+      if(dni == null || contraseña == null || email == null || telefono == null || nombre == null){
         
        
           res.status(400).json({ message: "Los campos no pueden ser nulos" });
