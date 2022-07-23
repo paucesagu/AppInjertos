@@ -20,8 +20,15 @@ const App = ()=> {
   const onLogOut = async () =>{
     try {
       
-      await logout();
-      navigation.navigate("LoginScreen");
+      var resultado = await logout();
+      if(resultado.includes("Exito")){
+        localStorage.removeItem("token");
+        navigation.navigate("LoginScreen");
+      }
+      else{
+        alert(resultado);
+      }
+      
       
     } catch (error) {
       console.log(error);

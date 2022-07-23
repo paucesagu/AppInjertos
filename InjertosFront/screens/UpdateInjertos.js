@@ -31,8 +31,7 @@ const [injertos,setInjertos]= useState({
   acvhbc:"",
   aminas:"",
   dosisna:"",
-  ecografia:"",
-  fecha:"",
+  ecografia:""
 
 });
 const placeholderSexo = {
@@ -84,7 +83,6 @@ const handleChangeEcografia= (valueEco) => {
           aminas: injertos.aminas, 
           dosisna: injertos.dosisna,
           ecografia: injertos.ecografia,
-          fecha: injertos.fecha,
         })
         
       })();
@@ -96,8 +94,15 @@ const handleChangeEcografia= (valueEco) => {
 
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
-    editarInjerto(route.params.id,injertos)
-    navigation.navigate('HomeScreen')
+    var resultado = editarInjerto(route.params.id,injertos)
+    if(resultado.includes("Exito")){
+      navigation.navigate('HomeScreen') //lo mandaria para ver los detalles del injerto
+      }
+      else{
+        alert(resultado);
+      }
+    
+   
   }
 
   return (
@@ -295,8 +300,8 @@ const handleChangeEcografia= (valueEco) => {
                     }
                   }}
                   items={[
-                      { label: "Masculino", value: "masculino" },
-                      { label: "Femenino", value: "femenino" },            
+                      { label: "Masculino", value: "Masculino" },
+                      { label: "Femenino", value: "Femenino" },            
           ]}/>
         </View>
 
@@ -321,24 +326,14 @@ const handleChangeEcografia= (valueEco) => {
                     }
                   }}
                   items={[
-                      { label: "Normal", value: "normal" },
-                      { label: "Patológica", value: "patologica" },
-                      { label: "No Realizada", value: "no realizada" },              
+                      { label: "Normal", value: "Normal" },
+                      { label: "Patológica", value: "Patológica" },
+                      { label: "No Realizada", value: "No realizada" },              
         ]}/>
         </View>
-        <Row style={{display:'grid'}}>
-          <View>
-          <Text style={{fontWeight:'bold'}}>
-          Fecha:
-        </Text>
-        </View>
-        </Row>
+        
         <Row>
           <View>
-           <TextInput style={styles.input}
-            placeholder='Fecha'
-            onChangeText={text => handleChange('fecha', text)}
-            value={injertos.fecha}/>
         
         <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
         <Feather name="edit" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Editar Injerto</Text>

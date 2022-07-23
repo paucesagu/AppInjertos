@@ -248,7 +248,7 @@ controller.addInjerto = async (req, res)  => {
     var respuesta = await connection.query('INSERT INTO injertos set ?', [newInjerto]);
     console.log("Injerto insertado");
     
-    res.status(200).json({ message: "Injerto creado" });
+    res.status(200).json({ message: "Exito. Injerto creado" });
     }
   } catch (error) {
    
@@ -330,7 +330,7 @@ try {
     await connection.query('UPDATE injertos set ? WHERE id = ?', [newInjerto, id]);
     await connection.query('UPDATE valoraciones set acierto=? WHERE id_injerto = ?', [acierto, id]);
     console.log("Injerto modificado");
-    res.status(200).json({ message: "Injerto modificado" });
+    res.status(200).json({ message: "Exito. Injerto modificado" });
     }
     
   

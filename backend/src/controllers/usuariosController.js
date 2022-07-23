@@ -110,7 +110,7 @@ controller.getUsuarios = async (req, res) => {
             console.log('usuario insertado')
            
          
-              res.sendStatus(204);
+            res.status(200).json({ message: "Exito. Usuario insertado" });
   
       })
       }
@@ -153,8 +153,7 @@ controller.getUsuarios = async (req, res) => {
       await connection.query('UPDATE usuarios set ? WHERE dni = ?', [newUser, dni]);
       console.log("Usuario modificado");
       
-            return res.sendStatus(204).json
-            return res.status(204).json({ message: "Injerto modificado" });
+            return res.status(204).json({ message: "Exito. Usuario modificado" });
 
     } catch (error) {
      
@@ -203,7 +202,7 @@ controller.modificarContraseña = async (req, res) => {
                 await connection.query('UPDATE usuarios SET contraseña = ? WHERE dni = ?', [hash, dni]);
                 console.log('contraseña modificada')
                
-                  res.sendStatus(204);
+                res.status(200).json({ message: "Exito. Contraseña modificada" });
                 
                 
     
@@ -243,7 +242,7 @@ controller.deleteUsuario = async (req, res) => {
   ]);
   console.log(result);
 
-  res.sendStatus(204);
+  res.status(200).json({ message: "Exito. Usuario eliminado" });
 };
 
 

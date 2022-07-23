@@ -58,9 +58,15 @@ const UpdateUsers = ({navigation, route}) => {
 
     usuarios.rol=value.value
     console.log(usuarios)
-
-    editarUsuario(route.params.dni,usuarios)
-    navigation.navigate('ListadoUsers')
+    var resultado = editarUsuario(route.params.dni,usuarios)
+    if(resultado.includes("Exito")){
+      navigation.navigate('ListadoUsers')
+      }
+      else{
+        alert(resultado);
+      }
+    
+    
   }
     
 

@@ -43,9 +43,15 @@ const NewUser = ({navigation, route}) => {
 
     usuarios.rol=value.value
     console.log(usuarios.rol)
+    var resultado = crearUsuario(usuarios)
+    if(resultado.includes("Exito")){
+      navigation.navigate('ListadoUsers')
+      }
+      else{
+        alert(resultado);
+      }
     
-    crearUsuario(usuarios)
-    navigation.navigate('ListadoUsers')
+   
   }
 
   return (

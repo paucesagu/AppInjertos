@@ -45,7 +45,7 @@ controller.logout = async(req, res) => {
     let hashedRandomNumberToAppend = await bcrypt.hash(randomNumberToAppend, 10);
     //concatenar el token del usuario con el numero random y darle ese valor al token
     req.headers["authorization"] = req.headers["authorization"] + hashedRandomNumberToAppend;
-    res.status(200).json({ message: "Usuario ha cerrado sesion" });
+    res.status(200).json({ message: "Exito. Usuario ha cerrado sesion" });
   }
   
 catch(err){

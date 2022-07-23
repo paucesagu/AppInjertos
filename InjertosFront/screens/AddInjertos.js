@@ -77,8 +77,14 @@ const AddInjertos = ({navigation, route}) => {
 
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
-    crearInjerto(injertos)
-    navigation.navigate('HomeScreen')
+    var resultado = crearInjerto(injertos)
+    if(resultado.includes("Exito")){
+      navigation.navigate('HomeScreen') //aqui habria que mandarlo a la pagina con los detalles del injerto
+      }
+      else{
+        alert(resultado);
+      }
+    
   }
   useEffect(()=>{
     if(route.params && route.params.id){
@@ -127,8 +133,8 @@ const AddInjertos = ({navigation, route}) => {
                   }
                 }}
                  items={[
-                     { label: "Masculino", value: "masculino" },
-                     { label: "Femenino", value: "femenino" },
+                     { label: "Masculino", value: "Masculino" },
+                     { label: "Femenino", value: "Femenino" },
                      
                  ]}
              />
@@ -213,9 +219,9 @@ const AddInjertos = ({navigation, route}) => {
                   }
                 }}
                  items={[
-                     { label: "Normal", value: "normal" },
-                     { label: "Patológica", value: "patologica" },
-                     { label: "No Realizada", value: "no realizada" },
+                     { label: "Normal", value: "Normal" },
+                     { label: "Patológica", value: "Patológica" },
+                     { label: "No Realizada", value: "No realizada" },
 
                      
                  ]}
@@ -223,9 +229,6 @@ const AddInjertos = ({navigation, route}) => {
       </View>
            
       <View style={{width: '50%'}}>
-        <TextInput style={styles.inputFecha}
-         placeholder='FECHA' 
-         onChangeText={text => handleChange('fecha', text)}/>
 
       <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
         <Text styles={{fontWeight: 'bold'}}>Añadir Injerto</Text>

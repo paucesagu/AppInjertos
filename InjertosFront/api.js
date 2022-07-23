@@ -11,7 +11,7 @@ export const getInjerto = async (injertoId) =>{
     
 }
 export const crearInjerto = async (newInjerto) =>{
-    const res = await fetch(API, {
+     await fetch(API, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -19,14 +19,16 @@ export const crearInjerto = async (newInjerto) =>{
         "authorization": localStorage.getItem("token")
       },
       body: JSON.stringify(newInjerto),
-    });
-    return await res.json();
-    
-}
+    }).then(response => response.json()).then((data)=>{
+      res = data.message
+  })
+  console.log(res)
+  return await res;
+  };
 
 export const editarInjerto = async (injertoId, newInjerto) => {
     console.log(injertoId, newInjerto)
-    const res = await fetch(`${API}/${injertoId}`, {
+    await fetch(`${API}/${injertoId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -34,12 +36,16 @@ export const editarInjerto = async (injertoId, newInjerto) => {
         "authorization": localStorage.getItem("token")
       },
       body: JSON.stringify(newInjerto),
-    });
-    return res;
+    }).then(response => response.json()).then((data)=>{
+      res = data.message
+  })
+  console.log(res)
+  return await res;
   };
 
   export const predecir = async (injertoId) =>{
-    const res = await fetch(`${API}/${injertoId}/predecir`, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+    const res = await fetch(`${API}/${injertoId}/predecir`, {
+      method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
     return await res.json();
     
 }
@@ -50,7 +56,6 @@ export const login = async (user) => {
   var res = "";
   console.log(user);
   localStorage.removeItem('token');
-  console.log(localStorage.getItem("token"));
   await fetch('http://localhost:8000/login', {
       method: "POST",
       body: JSON.stringify(user),
@@ -60,6 +65,7 @@ export const login = async (user) => {
       }
     }).then(response => response.json())
     .then((data) =>{
+      console.log(data)
       if(data.token === undefined) {
         res = data.message;
       }
@@ -73,11 +79,14 @@ export const login = async (user) => {
   };
 
 export const logout = async () =>{
-    const res = await fetch('http://localhost:8000/logout', {
+  var res = "";
+  await fetch('http://localhost:8000/logout', {
       method: "POST", headers:{"authorization": localStorage.getItem("token")}
-    });
-    localStorage.removeItem("token");
-    return await res.json();
+    }).then(response => response.json()).then((data)=>{
+        res = data.message
+    })
+    console.log(res)
+    return await res;
     
 }
 
@@ -104,8 +113,11 @@ export const crearUsuario = async (newUser) =>{
       "authorization": localStorage.getItem("token")
     },
     body: JSON.stringify(newUser),
-  });
-  return await res.json();
+  }).then(response => response.json()).then((data)=>{
+    res = data.message
+})
+console.log(res)
+return await res;
   
 }
 
@@ -119,8 +131,11 @@ export const editarUsuario = async (usuarioId, newUser) => {
         "authorization": localStorage.getItem("token")
       },
       body: JSON.stringify(newUser),
-    });
-    return res;
+    }).then(response => response.json()).then((data)=>{
+      res = data.message
+  })
+  console.log(res)
+  return await res;
   };
 
   export const deleteUsuario = async (usuarioId) => {
@@ -128,7 +143,11 @@ export const editarUsuario = async (usuarioId, newUser) => {
       method: "DELETE", headers:{
         "authorization": localStorage.getItem("token")
       }
-    });
+    }).then(response => response.json()).then((data)=>{
+      res = data.message
+  })
+  console.log(res)
+  return await res;
   };
 
   export const modificarContraseña = async (usuarioId, newPassword) => {
@@ -141,6 +160,18 @@ export const editarUsuario = async (usuarioId, newUser) => {
         "authorization": localStorage.getItem("token")
       },
       body: JSON.stringify(newPassword),
-    });
-    return res;
+    }).then(response => response.json()).then((data)=>{
+      res = data.message
+  })
+  console.log(res)
+  return await res;
   };
+
+  //reentrenar
+
+export const reentrenar = async () =>{
+    const res = await fetch("http://localhost:8000/reentrenar", {
+      method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+    return await res.json();
+    
+}
