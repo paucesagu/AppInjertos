@@ -317,7 +317,9 @@ try {
   console.log("se ha procesado el cuerpo")
   connection.query("SELECT * FROM valoraciones where id_injerto = ?", id, async (err, result) => {
       if(result.length  > 0) { //ya se ha valorado ese injerto
-        res.status(400).json({ message: "No se puede editar un injerto que ya ha sido validado" });
+        await connection.query('UPDATE valoraciones set acierto=? WHERE id_injerto = ?', [acierto, id]);
+        console.log("Acierto modificado");
+        res.status(200).json({ message: "Exito. Acierto modificado" });
 
     }
     else{
@@ -328,7 +330,6 @@ try {
     console.log("esperando conexion")
     
     await connection.query('UPDATE injertos set ? WHERE id = ?', [newInjerto, id]);
-    await connection.query('UPDATE valoraciones set acierto=? WHERE id_injerto = ?', [acierto, id]);
     console.log("Injerto modificado");
     res.status(200).json({ message: "Exito. Injerto modificado" });
     }
