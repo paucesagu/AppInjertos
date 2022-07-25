@@ -2,6 +2,21 @@ const controller = {};
 const { getConnection } = require('../database')
 const request = require('request');
 
+
+async function obtenerUltimaInstancia(){
+  var ultima =  0;
+  const connection =  await getConnection();
+  await connection.query('SELECT ultima_instancia FROM reentrenamientos where ultima_instancia = (select max(ultima_instancia) from reentrenamientos)').then(
+    result => ultima = result);
+    ultima = JSON.parse(JSON.stringify(ultima))[0].ultima_instancia;
+  return ultima;
+  
+};
+
+
+
+
+
 controller.reentrenar = async (req, res) => {
     try{
         
@@ -14,45 +29,53 @@ controller.reentrenar = async (req, res) => {
                 var indice = 0;
               
             }else{
-              //si existe un reentrenamiento devolvemos el mayor indice
-              const result = await connection.query('SELECT ultima_instancia FROM reentrenamientos where ultima_instancia = (select max(ultima_instancia) from reentrenamientos)');
-              console.log("guarda el indice")
-              var indice = await JSON.parse(JSON.stringify(result))[0].ultima_instancia;
+              //si existe un reentrenamiento devolvemos la ultima instancia reentrenada
+              var indice = obtenerUltimaInstancia();
             
             }
+        connection.query('SELECT * FROM valoraciones where id_injerto>?', indice, async (err, result2) => {
+          if(result2.length===0){ //no hay nuevas instancias completas para reentrenar
+            res.status(400).json({ message: "No hay nuevas instancias completas para reentrenar" })
+          
+        }else{
+            //procedemos a hacer la peticion 
+        console.log("hace el request")
+        request(
+          {
+            method: "GET",
+            uri: `http://localhost:8080/reentrenar?indice=${indice}`,
+            json: true,
+          },
+          async (error, response) => {
+            if (error) {
+              throw error;
+            }
+            console.log("guardamos lo recibido en las variables")
+            
+            var solucion = await response.body;
+            
+            var numInstancias = solucion['numeroInstancias'];
+            var tiempo = solucion['tiempoRequerido'];
+            var ultInstancia = solucion['ultimaInstancia']; //ultima instancia que ha sido valorada de la base de datos
+            var auc = solucion['valorAUC'];
+            const connection = await getConnection();
+            console.log("hacemos la conexion con la base de datos")
+            await connection.query("INSERT INTO reentrenamientos (numero_instancias, fecha, auc, ultima_instancia, id_usuario, tiempo) VALUES (?,?,?,?,?,?);",
+            [numInstancias, fecha, auc, ultInstancia, usuario, tiempo]);   
+            
+              
+            res.status(200).json(solucion);
+            
+            
+            
+          })
+        
+        }
+
+        })
             
         
-        //procedemos a hacer la peticion 
-        console.log("hace el request")
-            request(
-              {
-                method: "GET",
-                uri: `http://localhost:8080/reentrenar?indice=${indice}`,
-                json: true,
-              },
-              async (error, response) => {
-                if (error) {
-                  throw error;
-                }
-                console.log("guardamos lo recibido en las variables")
-                
-                var solucion = await response.body;
-                
-                var numInstancias = solucion['numeroInstancias'];
-                var tiempo = solucion['tiempoRequerido'];
-                var ultInstancia = solucion['ultimaInstancia']; //ultima instancia que ha sido valorada de la base de datos
-                var auc = solucion['valorAUC'];
-                const connection = await getConnection();
-                console.log("hacemos la conexion con la base de datos")
-                await connection.query("INSERT INTO reentrenamientos (numero_instancias, fecha, auc, ultima_instancia, id_usuario, tiempo) VALUES (?,?,?,?,?,?);",
-                [numInstancias, fecha, auc, ultInstancia, usuario, tiempo]);   
-                
-                  
-                res.status(200).json(solucion);
-                
-                
-                
-              })});
+      });
               
           
           
@@ -68,6 +91,24 @@ controller.reentrenar = async (req, res) => {
 
         
 }};
+
+controller.injertosNoEntrenados = async (req, res) => {
+try {
+  console.log("obtenemos indice")
+  var indice = await obtenerUltimaInstancia();
+  console.log(indice);
+  console.log("establecemos conexion");
+  const connection = await getConnection();
+  console.log("buscamos valoraciones")
+  var result = await connection.query('select * from valoraciones where id_injerto>?', indice) 
+    res.status(200).json(result.length);
+      
+
+} catch (error) {
+  res.status(500);
+  res.send(error.message);
+}
+};
 
 
 

@@ -6,5 +6,7 @@ const {  isAdmin } = require('../middlewares/auth');
 
 router.use(verifyToken);
 router.get('/reentrenar', isAdmin,reentrenarController.reentrenar);
+router.get('/injertosNoEntrenados', isAdmin, reentrenarController.injertosNoEntrenados);
+//router.get('/obtenerUltimaInstancia', isAdmin, reentrenarController.obtenerUltimaInstancia);
 
 module.exports = router;

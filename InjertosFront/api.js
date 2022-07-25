@@ -175,3 +175,10 @@ export const reentrenar = async () =>{
     return await res.json();
     
 }
+
+export const injertosNoEntrenados = async () =>{
+  const res = await fetch("http://localhost:8000/injertosNoEntrenados", {
+    method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+  return await res.json();
+  
+}
