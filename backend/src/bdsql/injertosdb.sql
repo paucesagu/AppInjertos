@@ -46,7 +46,7 @@ CREATE TABLE `injertos` (
   `ecografia_3` int NOT NULL,
   `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +55,7 @@ CREATE TABLE `injertos` (
 
 LOCK TABLES `injertos` WRITE;
 /*!40000 ALTER TABLE `injertos` DISABLE KEYS */;
-INSERT INTO `injertos` VALUES (2,63,1,24.49,0,0,0,1,0,15,18,43,138,0.4,0,0,0,0,1,0,0,'2022-07-22 17:21:02'),(3,65,1,28.34,1,0,0,0,0,29,18,82,139,0.94,0,0,1,0.06,0,1,0,'2022-07-22 17:25:12'),(4,81,0,32.81,1,1,1,1,1,22,21,68,153,0.8,0,0,1,0.15,1,0,0,'2022-07-22 20:52:58'),(5,65,0,25.81,1,1,1,1,1,22,21,68,153,0.8,1,0,1,0.15,1,0,0,'2022-07-22 21:35:23');
+INSERT INTO `injertos` VALUES (2,63,1,24.49,0,0,0,1,0,15,18,43,138,0.4,0,0,0,0,1,0,0,'2022-07-22 17:21:02'),(3,65,1,28.34,1,0,0,0,0,29,18,82,139,0.94,0,0,1,0.06,0,1,0,'2022-07-22 17:25:12'),(4,81,0,32.81,1,1,1,1,1,22,21,68,153,0.8,0,0,1,0.15,1,0,0,'2022-07-22 20:52:58'),(5,65,0,25.81,1,1,1,1,1,22,21,68,153,0.8,1,0,1,0.15,1,0,0,'2022-07-22 21:35:23'),(6,74,0,25.81,1,1,1,1,0,22,21,68,160,0.8,0,0,1,0.15,0,1,0,'2022-07-25 21:26:03');
 /*!40000 ALTER TABLE `injertos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,6 +74,7 @@ CREATE TABLE `reentrenamientos` (
   `ultima_instancia` int NOT NULL,
   `id_usuario` varchar(9) NOT NULL,
   `tiempo` float DEFAULT NULL,
+  `acc` float NOT NULL,
   PRIMARY KEY (`id_reentrenamiento`),
   KEY `id_usuario` (`id_usuario`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -85,7 +86,7 @@ CREATE TABLE `reentrenamientos` (
 
 LOCK TABLES `reentrenamientos` WRITE;
 /*!40000 ALTER TABLE `reentrenamientos` DISABLE KEYS */;
-INSERT INTO `reentrenamientos` VALUES (3,404,'2022-07-22 21:33:48',0.74534,4,'68641418B',2.06676),(4,405,'2022-07-22 21:36:17',0.741377,5,'68641418B',2.11696);
+INSERT INTO `reentrenamientos` VALUES (3,404,'2022-07-22 21:33:48',0.74534,4,'68641418B',2.06676,0),(4,405,'2022-07-22 21:36:17',0.741377,5,'68641418B',2.11696,0);
 /*!40000 ALTER TABLE `reentrenamientos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -139,7 +140,7 @@ CREATE TABLE `valoraciones` (
   CONSTRAINT `valoraciones_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`dni`),
   CONSTRAINT `valoraciones_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`dni`),
   CONSTRAINT `valoraciones_ibfk_4` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`dni`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +149,7 @@ CREATE TABLE `valoraciones` (
 
 LOCK TABLES `valoraciones` WRITE;
 /*!40000 ALTER TABLE `valoraciones` DISABLE KEYS */;
-INSERT INTO `valoraciones` VALUES (1,0,NULL,0.925516,2,'68641418B'),(2,1,NULL,0.959811,3,'68641418B'),(3,1,NULL,0.927851,4,'68641418B'),(4,1,NULL,0.727392,5,'68641418B');
+INSERT INTO `valoraciones` VALUES (1,0,NULL,0.925516,2,'68641418B'),(2,1,NULL,0.959811,3,'68641418B'),(3,1,NULL,0.927851,4,'68641418B'),(4,1,NULL,0.727392,5,'68641418B'),(5,1,NULL,0.819013,6,'53769119H');
 /*!40000 ALTER TABLE `valoraciones` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-07-23 18:40:34
+-- Dump completed on 2022-07-26 15:45:31
