@@ -4,9 +4,9 @@ const reentrenarController = require('../controllers/reentrenarController');
 const { verifyToken } = require('../middlewares/verifyToken');
 const {  isAdmin } = require('../middlewares/auth');
 
-router.use(verifyToken);
-router.get('/reentrenar', isAdmin,reentrenarController.reentrenar);
-router.get('/injertosNoEntrenados', isAdmin, reentrenarController.injertosNoEntrenados);
-//router.get('/obtenerUltimaInstancia', isAdmin, reentrenarController.obtenerUltimaInstancia);
+router.use(verifyToken, isAdmin);
+router.get('/reentrenar', reentrenarController.reentrenar);
+router.get('/injertosNoEntrenados', reentrenarController.injertosNoEntrenados);
+router.get('/reentrenamientos', reentrenarController.getReentrenamientos);
 
 module.exports = router;

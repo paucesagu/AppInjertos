@@ -112,6 +112,23 @@ try {
 };
 
 
+controller.getReentrenamientos = async (req, res) => {
+  try {
+    var connection = await getConnection();
+    const result = await connection.query('SELECT * FROM reentrenamientos order by fecha desc');
+    
+        res.status(200).json(result);
+      
+    
+} catch (error) {
+    
+        res.status(500);
+        res.send(error.message);
+      
+    
+}
+};
+
 
 
 module.exports = controller;
