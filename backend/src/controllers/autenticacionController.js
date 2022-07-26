@@ -54,6 +54,13 @@ catch(err){
 };
 /*Ahora con el token cambiado ya no será valido, se tendra que volver a loggear el usuario*/ 
 
+controller.getRolUsuario = async (req, res) =>{
+  var rol = await req.userRol;
+  console.log(rol);
+  res.status(200).json({ rol });
+};
+
+
 
 module.exports = controller;
 

@@ -11,6 +11,7 @@ export const getInjerto = async (injertoId) =>{
     
 }
 export const crearInjerto = async (newInjerto) =>{
+  var res ="";
      await fetch(API, {
       method: "POST",
       headers: {
@@ -27,6 +28,7 @@ export const crearInjerto = async (newInjerto) =>{
   };
 
 export const editarInjerto = async (injertoId, newInjerto) => {
+  var res = "";
     console.log(injertoId, newInjerto)
     await fetch(`${API}/${injertoId}`, {
       method: "PUT",
@@ -52,10 +54,17 @@ export const editarInjerto = async (injertoId, newInjerto) => {
 
 
 //autenticacion
+export async function getRol(){
+  const res = await fetch("http://localhost:8000/getRol", {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+  return await res.json();
+  
+}
+
 export const login = async (user) => {
   var res = "";
   console.log(user);
   localStorage.removeItem('token');
+  localStorage.removeItem('rol');
   await fetch('http://localhost:8000/login', {
       method: "POST",
       body: JSON.stringify(user),
@@ -74,7 +83,11 @@ export const login = async (user) => {
         res = "exito";
       }
     } )
+    var rol = ""
+    await getRol().then(response=>rol = response.rol);
+    localStorage.setItem("rol", rol);
     console.log(localStorage.getItem("token"));
+    console.log(localStorage.getItem("rol"));
     return res;
   };
 
@@ -89,6 +102,8 @@ export const logout = async () =>{
     return await res;
     
 }
+
+
 
 //usuarios
 const API2 = "http://localhost:8000/usuarios";
@@ -105,7 +120,8 @@ export const getUser = async (usuarioId) =>{
 }
 
 export const crearUsuario = async (newUser) =>{
-  const res = await fetch(API2, {
+  var res = "";
+  await fetch(API2, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -122,8 +138,8 @@ return await res;
 }
 
 export const editarUsuario = async (usuarioId, newUser) => {
-    
-    const res = await fetch(`${API2}/${usuarioId}`, {
+    var res = "";
+    await fetch(`${API2}/${usuarioId}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -139,6 +155,7 @@ export const editarUsuario = async (usuarioId, newUser) => {
   };
 
   export const deleteUsuario = async (usuarioId) => {
+    var res = "";
     await fetch(`${API2}/${usuarioId}`, {
       method: "DELETE", headers:{
         "authorization": localStorage.getItem("token")
@@ -152,7 +169,8 @@ export const editarUsuario = async (usuarioId, newUser) => {
 
   export const modificarContraseña = async (usuarioId, newPassword) => {
     console.log(usuarioId, newPassword)
-    const res = await fetch(`${API2}/${usuarioId}/password`, {
+    var res = "";
+    await fetch(`${API2}/${usuarioId}/password`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
