@@ -58,10 +58,11 @@ controller.reentrenar = async (req, res) => {
             var tiempo = solucion['tiempoRequerido'];
             var ultInstancia = solucion['ultimaInstancia']; //ultima instancia que ha sido valorada de la base de datos
             var auc = solucion['valorAUC'];
+            var acc = solucion['valorACC'];
             const connection = await getConnection();
             console.log("hacemos la conexion con la base de datos")
-            await connection.query("INSERT INTO reentrenamientos (numero_instancias, fecha, auc, ultima_instancia, id_usuario, tiempo) VALUES (?,?,?,?,?,?);",
-            [numInstancias, fecha, auc, ultInstancia, usuario, tiempo]);   
+            await connection.query("INSERT INTO reentrenamientos (numero_instancias, fecha, auc, ultima_instancia, id_usuario, tiempo, acc) VALUES (?,?,?,?,?,?,?);",
+            [numInstancias, fecha, auc, ultInstancia, usuario, tiempo, acc]);   
             
               
             res.status(200).json(solucion);
