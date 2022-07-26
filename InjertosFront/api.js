@@ -200,3 +200,8 @@ export const injertosNoEntrenados = async () =>{
   return await res.json();
   
 }
+export const getReentrenamientos = async () =>{
+  const res = await fetch("http://localhost:8000/reentrenamientos", {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+  return await res.json();
+  
+}
