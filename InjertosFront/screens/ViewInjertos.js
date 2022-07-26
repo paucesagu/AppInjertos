@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 const ViewInjertos = ({navigation, route}) => {
+  //console.log(localStorage.getItem('rol'));
   //Estados
 const [injertos,setInjertos]= useState({
   edad:"",
