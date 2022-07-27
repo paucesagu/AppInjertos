@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,7 +16,12 @@ import { logout } from "./api";
 
 const Stack = createStackNavigator();
 
+
+
 const App = ()=> {
+
+  const [disabled,setDisabled]=useState(false)
+
   const onLogOut = async () =>{
     try {
       
@@ -35,6 +40,19 @@ const App = ()=> {
     }
     
     }
+
+
+
+    const getTipoRol =()=>{
+      let disibled;
+    if (localStorage.getItem("rol")=== "usuario"){
+
+    }else if(localStorage.getItem("rol")=== "administrador"){
+      
+    }
+
+  }
+
 
   return(
     <NavigationContainer>
@@ -67,6 +85,20 @@ const App = ()=> {
             
             <Feather style= {{marginLeft:30}} name="users" size={30} color="black" onPress={() => navigation.navigate("ListadoUsers")} />   
             </TouchableOpacity>
+
+
+/*    <View>
+            
+            <TouchableOpacity
+            style={{backgroundColor:'black',width:'50%',height:50, justifyContent:'center'}}
+            disabled={disabled}
+            onPress={onLogOut}>
+            <Text style={{color:'white',textAlign:'center'}}> {disabled? 'Disabled':'Enabled'} </Text>
+            </TouchableOpacity>
+            <Button title='Disable below button' onPress={()=>setDisabled(!disabled)}></Button>
+            <TouchableOpacity
+onPress={disabled? null : ()=>console.warn('enabled')}></TouchableOpacity>
+          </View>*/
           
         ),
         headerRight: () => (
