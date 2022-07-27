@@ -41,7 +41,7 @@ useEffect(() => {
   return (
     <View>
       <View style={{display:'block'}}>
-        <Text style={{fontSize:'15px'}}>Injertos sin entrenar:</Text> <Text style={{fontWeight: 'bold', fontSize:'15px'}}> {indice}</Text>
+        <Text style={{fontSize:'15px'}}>Injertos valorados sin entrenar:</Text> <Text style={{fontWeight: 'bold', fontSize:'15px'}}> {indice}</Text>
       </View>
     <FlatList
     style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}

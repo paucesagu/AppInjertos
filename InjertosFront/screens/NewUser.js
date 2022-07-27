@@ -38,14 +38,14 @@ const NewUser = ({navigation, route}) => {
       //AÑADIR Usuario 
   const handleChange= (name, value) => setUsers({...usuarios, [name]:value,})
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(usuarios)
 
     usuarios.rol=value.value
     console.log(usuarios.rol)
-    var resultado = crearUsuario(usuarios)
+    const resultado = await crearUsuario(usuarios)
     if(resultado.includes("Exito")){
-      navigation.navigate('ListadoUsers')
+      await navigation.navigate('ListadoUsers')
       }
       else{
         alert(resultado);

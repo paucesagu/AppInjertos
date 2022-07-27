@@ -80,7 +80,7 @@ export const login = async (user) => {
       }
       else{
         localStorage.setItem("token", data.token)
-        res = "exito";
+        res = data.message;
       }
     } )
     var rol = ""

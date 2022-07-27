@@ -25,9 +25,9 @@ const onSubmit = async () =>{
   try {
     
     const result = await login(body);
-    if(result == "exito" && localStorage.getItem("rol")=="usuario" ){
+    if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
       navigation.navigate('HomeScreenUsuario');
-    }else if(result == "exito" && localStorage.getItem("rol")=="administrador"){
+    }else if(result.includes("Exito") && localStorage.getItem("rol")=="administrador"){
       navigation.navigate('HomeScreen');
     }
     else{
