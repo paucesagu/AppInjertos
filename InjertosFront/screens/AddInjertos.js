@@ -78,12 +78,11 @@ const AddInjertos = ({navigation, route}) => {
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
     var resultado = crearInjerto(injertos)
-    if(resultado.includes("Exito")){
-      navigation.navigate('HomeScreen') //aqui habria que mandarlo a la pagina con los detalles del injerto
-      }
-      else{
-        alert(resultado);
-      }
+    if(localStorage.getItem("rol")=="usuario" ){
+      navigation.navigate('HomeScreenUsuario');
+    }else if(localStorage.getItem("rol")=="administrador"){
+      navigation.navigate('HomeScreen');
+    }
     
   }
   useEffect(()=>{

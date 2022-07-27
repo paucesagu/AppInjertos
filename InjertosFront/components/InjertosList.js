@@ -16,16 +16,9 @@ const InjertosList = () => {
       setInjertos(data);
   }
 
-  const [indice, setIndice] = useState([])  
-
-  const loadIndice = async () =>{
-    const data = await injertosNoEntrenados();
-    setIndice(data);
-    console.log(data);
-}
+  
 
 useEffect(() => {    
-  loadIndice() ,
   loadInjertos()
 }, [])
 
@@ -40,9 +33,6 @@ useEffect(() => {
   })
   return (
     <View>
-      <View style={{display:'block'}}>
-        <Text style={{fontSize:'15px'}}>Injertos valorados sin entrenar:</Text> <Text style={{fontWeight: 'bold', fontSize:'15px'}}> {indice}</Text>
-      </View>
     <FlatList
     style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}
             data={injertos}

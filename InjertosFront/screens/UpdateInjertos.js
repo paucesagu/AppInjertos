@@ -90,20 +90,27 @@ const handleChangeEcografia= (valueEco) => {
   }, []);
   const handleChange= (name, value) => setInjertos({...injertos, [name]:value,})
 
-  const handleSubmit = () => {
 
+  const handleSubmit = async () =>{
+    try {
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
-    var resultado = editarInjerto(route.params.id,injertos)
-    if(resultado.includes("Exito")){
-      navigation.navigate('HomeScreen') //lo mandaria para ver los detalles del injerto
+    var result = await editarInjerto(route.params.id,injertos)
+      
+      if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
+        navigation.navigate('HomeScreenUsuario');
+      }else if(result.includes("Exito") && localStorage.getItem("rol")=="administrador"){
+        navigation.navigate('HomeScreen');
       }
       else{
-        alert(resultado);
+        alert(result);
       }
+      
+    } catch (error) {
+      console.log(error);
+    }
     
-   
-  }
+    }
 
   return (
     

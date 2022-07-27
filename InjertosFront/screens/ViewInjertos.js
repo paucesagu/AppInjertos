@@ -71,14 +71,21 @@ const [injertos,setInjertos]= useState({
   
 
   const handleVolver = () => {
-    navigation.navigate('HomeScreen')
+    if(localStorage.getItem("rol")=="usuario" ){
+      navigation.navigate('HomeScreenUsuario');
+    }else if(localStorage.getItem("rol")=="administrador"){
+      navigation.navigate('HomeScreen');
+    }
   }
 
-  const handleSubmit = () => {
-    const resultado = predecir(route.params.id)
-   console.log(resultado)
-       //aqui habria que mandarlo a la pagina con los detalles del injerto
-    
+  const handleSubmit = async () => {
+    const resultado = await predecir(route.params.id)
+    if(localStorage.getItem("rol")=="usuario" ){
+      navigation.navigate('HomeScreenUsuario');
+    }else if(localStorage.getItem("rol")=="administrador"){
+      navigation.navigate('HomeScreen');
+    }
+   
   }
 
   const getBackgroundColor = () => {
@@ -96,6 +103,7 @@ const [injertos,setInjertos]= useState({
   return (
     <View style={{alignItems: 'center'}}>
       <Row>
+        <Text style={{fontSize:"15", fontWeight:"bold"}} >Recuerde validar el injerto</Text>
         <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
         <Text styles={{fontWeight: 'bold'}}>Validar Injerto</Text>
       </TouchableOpacity>
