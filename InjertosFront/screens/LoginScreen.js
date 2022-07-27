@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native'
 import { login } from "../api"
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 import { TextField } from '@mui/material';
 
 
@@ -25,7 +25,9 @@ const onSubmit = async () =>{
   try {
     
     const result = await login(body);
-    if(result == "exito"){
+    if(result == "exito" && localStorage.getItem("rol")=="usuario" ){
+      navigation.navigate('HomeScreenUsuario');
+    }else if(result == "exito" && localStorage.getItem("rol")=="administrador"){
       navigation.navigate('HomeScreen');
     }
     else{

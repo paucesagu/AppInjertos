@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {useNavigation} from '@react-navigation/native'
 import { Feather, FontAwesome5  } from '@expo/vector-icons';
 
@@ -10,7 +10,7 @@ const InjertosItem = ({injertos}) => {
 
   const getBackgroundColor = () => {
     let color;
-    if(injertos.validez == "valido"){
+    if(injertos.validez == "Válido"){
       color ="#90EE90"
     }else{
       color="#ff0000"
@@ -20,9 +20,11 @@ const InjertosItem = ({injertos}) => {
 
   return (
     <View style={styles.item}>
+     
       <View style={styles.container}>
         <TouchableOpacity style={{paddingRight:30}} onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})} >
           <View style={{flexDirection: 'row',display: 'block'}}>
+            
             <Text style={{fontWeight: 'bold'}}>ID: </Text>
             <Text style={{fontWeight: 'bold'}}> {injertos.id}</Text>
           </View>

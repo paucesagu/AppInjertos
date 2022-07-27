@@ -2,7 +2,7 @@ import React , {useState} from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AntDesign, Feather  } from '@expo/vector-icons';
+import { AntDesign, Feather,FontAwesome5   } from '@expo/vector-icons';
 import AddInjertos from './screens/AddInjertos';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -13,6 +13,9 @@ import NewUser from './screens/NewUser';
 import ViewUser from './screens/ViewUser';
 import UpdateUsers from './screens/UpdateUsers';
 import { logout } from "./api";
+import HomeScreenUsuario from './screens/HomeScreenUsuario';
+import HistorialEntrenamiento from './screens/HistorialEntrenamiento';
+
 
 const Stack = createStackNavigator();
 
@@ -40,19 +43,6 @@ const App = ()=> {
     }
     
     }
-
-
-
-    const getTipoRol =()=>{
-      let disibled;
-    if (localStorage.getItem("rol")=== "usuario"){
-
-    }else if(localStorage.getItem("rol")=== "administrador"){
-      
-    }
-
-  }
-
 
   return(
     <NavigationContainer>
@@ -84,21 +74,9 @@ const App = ()=> {
             <AntDesign style={{marginLeft:10}} name="addfile" size={30} color="black" onPress={() => navigation.navigate("AddInjertos")} />
             
             <Feather style= {{marginLeft:30}} name="users" size={30} color="black" onPress={() => navigation.navigate("ListadoUsers")} />   
-            </TouchableOpacity>
 
-
-/*    <View>
-            
-            <TouchableOpacity
-            style={{backgroundColor:'black',width:'50%',height:50, justifyContent:'center'}}
-            disabled={disabled}
-            onPress={onLogOut}>
-            <Text style={{color:'white',textAlign:'center'}}> {disabled? 'Disabled':'Enabled'} </Text>
+            <FontAwesome5 style= {{marginLeft:30}} name="history" size={28} color="black" onPress={() => navigation.navigate("HistorialEntrenamiento")} />
             </TouchableOpacity>
-            <Button title='Disable below button' onPress={()=>setDisabled(!disabled)}></Button>
-            <TouchableOpacity
-onPress={disabled? null : ()=>console.warn('enabled')}></TouchableOpacity>
-          </View>*/
           
         ),
         headerRight: () => (
@@ -107,6 +85,41 @@ onPress={disabled? null : ()=>console.warn('enabled')}></TouchableOpacity>
           </TouchableOpacity>
         )
       })}/>
+      
+      <Stack.Screen 
+        name="HomeScreenUsuario"
+        component = {HomeScreenUsuario} 
+        options={ ({navigation}) => ({
+          title:"Inicio",
+          headerStyle: {backgroundColor: "#9af88c"},
+          headerTitleAlign: 'center',
+          headerTitleStyle:{
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+          <TouchableOpacity style={{display:'block', marginLeft:3}}>
+            <AntDesign style={{marginLeft:10}} name="addfile" size={30} color="black" onPress={() => navigation.navigate("AddInjertos")} />
+          </TouchableOpacity>
+          
+        ),
+        headerRight: () => (
+          <TouchableOpacity style={{display:'block', marginRight:'10px'}} onPress={onLogOut}>
+            <AntDesign name="logout" size={24} color="black" /><Text style={{marginLeft:3,fontSize:'large', fontWeight:'bold'}}>Salir</Text>
+          </TouchableOpacity>
+        )
+      })}/>
+
+      <Stack.Screen name="HistorialEntrenamiento" 
+        title="Modificar Injertos"
+        component={HistorialEntrenamiento}
+        options={{
+          title:'Historial Entrenamientos',
+          headerStyle:{backgroundColor: "#9af88c"},
+          headerTitleStyle:{
+            fontWeight:'bold'},
+          headerTitleAlign:'center',
+          headerTintColor: "black",
+        }}/> 
 
         <Stack.Screen name="UpdateInjertos" 
         title="Modificar Injertos"
