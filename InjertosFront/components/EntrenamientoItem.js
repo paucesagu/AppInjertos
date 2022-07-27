@@ -9,7 +9,7 @@ const EntrenamientoItem = ({entrenamientos}) => {
   return (
         <View style={styles.item}>
           <View style={styles.container}>
-            <TouchableOpacity style={{paddingRight:30}} onPress={() => navigation.navigate('ViewUser', {dni: usuarios.dni})} >
+            <TouchableOpacity style={{paddingRight:30}}>
               <View style={{flexDirection: 'row',display: 'block'}}>
                 <Text style={{fontWeight: 'bold'}}>Instancia: </Text>
                 <Text style={{fontWeight: 'bold'}}> {entrenamientos.ultima_instancia}</Text>

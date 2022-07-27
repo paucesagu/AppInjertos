@@ -4,6 +4,7 @@ import { getInjerto } from "../api"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AntDesign } from '@expo/vector-icons';
+import {predecir} from "../api"
 
 
 const ViewInjertos = ({navigation, route}) => {
@@ -67,9 +68,17 @@ const [injertos,setInjertos]= useState({
       })();
     }
   }, []);
+  
 
   const handleVolver = () => {
     navigation.navigate('HomeScreen')
+  }
+
+  const handleSubmit = () => {
+    const resultado = predecir(route.params.id)
+   console.log(resultado)
+       //aqui habria que mandarlo a la pagina con los detalles del injerto
+    
   }
 
   const getBackgroundColor = () => {
@@ -86,6 +95,12 @@ const [injertos,setInjertos]= useState({
 
   return (
     <View style={{alignItems: 'center'}}>
+      <Row>
+        <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
+        <Text styles={{fontWeight: 'bold'}}>Validar Injerto</Text>
+      </TouchableOpacity>
+      </Row>
+        
 
     <Row style={{display:'flex'}}>
       <Col md={6} style={{display:'grid'}}>
