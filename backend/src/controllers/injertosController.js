@@ -123,15 +123,16 @@ controller.getInjertos = async (req, res) => {
             injerto.probabilidad = String(probabilidad.toFixed(2)) + "%";
 
           }
-          const event = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
-          console.log(event)
-          
-          var fecha = Date(i.fecha);
-          console.log(fecha)
-          console.log(typeof fecha)
-          var fecha2 = Date.parse("2019-01-01T12:30:00.000Z")
-          console.log(fecha);
-          fecha = fecha.toLocaleString('es-ES', opciones)
+      
+          var fecha = i.fecha;
+          let firstArray = fecha.split("T");
+
+          let dma = firstArray[0].split('-');
+          let fmt = dma[2] + '/' + dma[1] + '/' + dma[0];
+
+          let hms = firstArray[1].split(":");
+          let hm = hms[0] + ":" + hms[1];
+          fecha = fmt + " " + hm;
           injerto.fecha = fecha;
           
           arrayInjertos.push({...injerto});

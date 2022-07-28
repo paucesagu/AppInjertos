@@ -1,8 +1,11 @@
 //injertos
 const API = "http://localhost:8000/injertos";
 export const getInjertos = async () =>{
-    const res = await fetch(API, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+    var resultado;
+    await fetch(API, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+      response=>response.json()
+    ).then(data=>resultado = data.arrayInjertos)
+    return await resultado;
     
 }
 export const getInjerto = async (injertoId) =>{
