@@ -75,9 +75,10 @@ def añadirInstancias(indice):
     
     conexion1=mysql.connector.connect(host='127.0.0.1',
         user='root',
-        password='password',
+        password='1234',
         database='injertosdb',
-        port=3306) 
+        port=3306,
+        auth_plugin='mysql_native_password') 
     ultIndice = 0
     cursor1=conexion1.cursor()
     sentencia = "SELECT id, edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, validez, ecografia_1, ecografia_2, ecografia_3 FROM injertos i LEFT OUTER JOIN valoraciones v ON  v.id_injerto = i.id where id>" + str(indice)

@@ -30,10 +30,13 @@ controller.reentrenar = async (req, res) => {
               
             }else{
               //si existe un reentrenamiento devolvemos la ultima instancia reentrenada
-              var indice = obtenerUltimaInstancia();
+              var indice = await obtenerUltimaInstancia();
             
             }
+            console.log("Prueba")
         connection.query('SELECT * FROM valoraciones where id_injerto>?', indice, async (err, result2) => {
+          console.log(result2)
+          console.log(indice)
           if(result2.length===0){ //no hay nuevas instancias completas para reentrenar
             res.status(400).json({ message: "No hay nuevas instancias completas para reentrenar" })
           
@@ -53,7 +56,7 @@ controller.reentrenar = async (req, res) => {
             console.log("guardamos lo recibido en las variables")
             
             var solucion = await response.body;
-            
+            console.log(solucion)
             var numInstancias = solucion['numeroInstancias'];
             var tiempo = solucion['tiempoRequerido'];
             var ultInstancia = solucion['ultimaInstancia']; //ultima instancia que ha sido valorada de la base de datos
