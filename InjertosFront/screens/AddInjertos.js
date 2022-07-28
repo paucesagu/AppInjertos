@@ -127,8 +127,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('hta', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -148,8 +148,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('dm', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -231,8 +231,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('dlp', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -253,8 +253,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('apm', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -274,8 +274,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('apq', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -304,8 +304,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('acvhc', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -325,8 +325,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('acvhbc', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -346,8 +346,8 @@ const AddInjertos = ({navigation, route}) => {
                 onPress={(value) => handleChange('aminas', value)}
 
                 textColor='#7a44cf'
-                selectedColor='#9af88c'
-                buttonColor='#FFFFFF'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
                 borderColor='#9af88c'
                 hasPadding
                 options={[
@@ -451,17 +451,14 @@ const styles = StyleSheet.create({
   },
   ButtonText:{
     fontWeight:'bold',
+  },
+  texto:{
+    fontWeight: 'bold',
+    marginLeft:10,
   }
   
   
 })
 
-/*<div>
-<select id="fruits" defaultValue="Elegir Sexo"
-        onChange={() => handleChange('sexo', {fruit})} style={dropdown.text}>
-  <option value="masculino">Masculino</option>
-  <option value="femenino">Femenino</option>
-</select>
-</div>*/ 
 
 export default AddInjertos

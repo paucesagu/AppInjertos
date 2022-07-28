@@ -201,7 +201,7 @@ try {
     else{
       injerto.apq = "Si"
     }
-    
+    injerto.imc = json[0].imc;
     injerto.got = json[0].got;
     injerto.gpt = json[0].gpt;
     injerto.ggt = json[0].ggt;

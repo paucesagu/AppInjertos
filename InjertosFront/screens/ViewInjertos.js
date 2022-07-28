@@ -265,18 +265,19 @@ const [injertos,setInjertos]= useState({
           editable = {false}
           value={injertos.fecha}/>
           
-        <Text style={styles.texto}>
+        
+
+    </Col>
+    </Row>
+    <Row style={{display: 'grid'}}>
+      <Col style={{display:'contents'}}>   
+      <Text style={styles.texto}>
         Acierto:
       </Text>
         <TextInput style={styles.input}
           placeholder='Acierto'
           editable = {false}
-          value={injertos.acierto}/>
-
-    </Col>
-    </Row>
-    <Row style={{display: 'grid'}}>
-      <Col style={{display:'contents'}}>    
+          value={injertos.acierto}/> 
       <Text style={styles.texto}>
         Válido:
       </Text>
