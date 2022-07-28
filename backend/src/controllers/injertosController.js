@@ -261,12 +261,26 @@ try {
     else{
       injerto.validez = "No válido";
     }
-    if(json[0].probabilidad ==null){
-      injerto.probabilidad = 0.0;
-    }
-    else{
-      injerto.probabilidad = json[0].probabilidad;
-    }
+    var probabilidad = json[0].probabilidad;
+          if( probabilidad==null){
+            injerto.probabilidad = String(0) + "%";
+          }
+          else{
+            probabilidad = probabilidad*100;
+            injerto.probabilidad = String(probabilidad.toFixed(2)) + "%";
+
+          }
+      
+          var fecha = json[0].fecha;
+          let firstArray = fecha.split("T");
+
+          let dma = firstArray[0].split('-');
+          let fmt = dma[2] + '/' + dma[1] + '/' + dma[0];
+
+          let hms = firstArray[1].split(":");
+          let hm = hms[0] + ":" + hms[1];
+          fecha = fmt + " " + hm;
+          injerto.fecha = fecha;
     
     
     
