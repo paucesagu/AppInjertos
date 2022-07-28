@@ -77,7 +77,8 @@ def añadirInstancias(indice):
         user='root',
         password='password',
         database='injertosdb',
-        port=3306) 
+        port=3306,
+        auth_plugin='mysql_native_password') 
     ultIndice = 0
     cursor1=conexion1.cursor()
     sentencia = "SELECT id, edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, validez, ecografia_1, ecografia_2, ecografia_3 FROM injertos i LEFT OUTER JOIN valoraciones v ON  v.id_injerto = i.id where id>" + str(indice)
@@ -141,8 +142,9 @@ def predict():
 
     # La lista de caracteristicas que se utilizaran
     # para la predicción
+    print(edad)
     features = [[edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na, bbt, acvhc, acvhbc, dosisna, aminas,ecografia_1, ecografia_2, ecografia_3]]
-    
+    print(features)
     # Utilizamos el modelo para la predicción de los datos
     label_index = MODEL.predict(features)
     y_proba = MODEL.predict_proba(features)
@@ -155,7 +157,7 @@ def predict():
    
     
     # Creamos y enviamos la respuesta al cliente
-    return jsonify(status='clasificado completado', clasificacion=label, probabilidad = str(prob))
+    return jsonify(status='clasificado completado', clasificacion=label, probabilidad = prob)
 
 
 @app.route("/reentrenar")
