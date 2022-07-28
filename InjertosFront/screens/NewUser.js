@@ -44,6 +44,7 @@ const NewUser = ({navigation, route}) => {
     usuarios.rol=value.value
     console.log(usuarios.rol)
     const resultado = await crearUsuario(usuarios)
+    console.log(resultado)
     if(resultado.includes("Exito")){
       await navigation.navigate('ListadoUsers')
       }

@@ -54,20 +54,25 @@ const UpdateUsers = ({navigation, route}) => {
 
     const handleChange= (name, value) => setUsers({...usuarios, [name]:value,})
 
-  const handleSubmit = async () => {
 
-    usuarios.rol=value.value
-    console.log(usuarios)
-    const resultado = await editarUsuario(route.params.dni,usuarios)
-    if(resultado.includes("Exito")){
-      navigation.navigate('ListadoUsers')
-      }
-      else{
-        alert(resultado);
-      }
-    
-    
-  }
+    const handleSubmit = async () => {
+      console.log(usuarios)
+  
+      usuarios.rol=value.value
+      console.log(usuarios.rol)
+      const resultado = await editarUsuario(route.params.dni,usuarios)
+      console.log(resultado)
+      if(resultado.includes("Exito")){
+        await navigation.navigate('ListadoUsers')
+        }
+        else{
+          alert(resultado);
+        }
+      
+     
+    }
+
+  
     
 
   return (

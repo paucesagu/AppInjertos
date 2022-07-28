@@ -129,40 +129,62 @@ controller.getUsuarios = async (req, res) => {
 
   controller.editUser = async (req, res) => {
     try {
-      var dni = req.params.dni.toUpperCase();
+      var dni = req.body.dni.toUpperCase();
+      var contraseña = req.body.contraseña;
       var nombre = req.body.nombre;
       var apellidos = req.body.apellidos;
       var email = req.body.email;
       var telefono = req.body.telefono;
-      var contraseña = req.body.contraseña;
       var rol= req.body.rol;
-      
-      console.log("esperando conexion");
-      console.log(regexEmail.test(email));
-      if(!regexEmail.test(email) || !regexTelefono.test(telefono)){
+     
+      console.log("Entra en las valoraciones");
+      if(dni == null || contraseña == null || email == null || telefono == null || nombre == null){
         
        
-          res.status(400).json({ message: "El formato introducido de telefono o email no es el correcto" });
+          res.status(400).json({ message: "Los campos no pueden ser nulos" });
+          
       }
-
       
-      const newUser = {
-        dni, nombre, apellidos, telefono, email, contraseña, rol 
-        };
-      const connection = await getConnection();
-      await connection.query('UPDATE usuarios set ? WHERE dni = ?', [newUser, dni]);
-      console.log("Usuario modificado");
+      else if(!regexDNI.test(dni) || !regexEmail.test(email.toLowerCase()) || !regexTelefono.test(telefono)) {
+        console.log("pasa las valoraciones de nulos");
+        
+        
+       
+          res.status(400).json({ message: "El formato introducido de DNI, email o teléfono no es el correcto" });
+       
+      }
       
-            return res.status(204).json({ message: "Exito. Usuario modificado" });
-
+      else if(!regexContraseña.test(contraseña)){
+        console.log("pasa las valoraciones de regex");
+        
+          res.status(400).json({ message: "La contraseña debe tener al entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula y al menos una mayúscula." });
+          
+        }
+     
+      else{
+        console.log("pasa la valoracion de la contraseña");
+                 
+        bcrypt.hash(contraseña, saltRounds, async(err, hash) => {
+            if (err) {
+              console.log(err);
+            }
+          
+            var connection = await getConnection();
+            await connection.query('UPDATE usuarios set dni = ?, nombre = ?, apellidos = ?, telefono = ?, email = ?, contraseña = ?, rol = ? WHERE dni = ?', [dni, nombre, apellidos, telefono, email, hash, rol, dni]);
+            console.log('usuario modificado')
+           
+         
+            res.status(200).json({ message: "Exito. Usuario modificado" });
+  
+      })
+      }
+      
     } catch (error) {
      
         res.status(500);
         res.send(error.message);
-        return res.status(400).json
       
-
-  };
+    }
 };
 
 controller.modificarContraseña = async (req, res) => {

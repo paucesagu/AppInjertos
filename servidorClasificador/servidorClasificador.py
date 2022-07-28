@@ -95,7 +95,6 @@ def añadirInstancias(indice):
 # In[26]:
 
 
-
 app = Flask(__name__)
 
 app.secret_key = "tfgPAU_GUI22" #Secret Key
@@ -118,10 +117,10 @@ def predict():
     Declaramos cuales seran los parametros que recibe la petición
     
     """
-    edad = request.args.get('edad')
-    sexo = request.args.get('sexo')
-    imc = request.args.get('imc')
-    hta = request.args.get('hta')
+    edad = int(request.args.get('edad'))
+    sexo = int(request.args.get('sexo'))
+    imc = float(request.args.get('imc'))
+    hta = int(request.args.get('hta'))
     dm = request.args.get('dm')
     dlp = request.args.get('dlp')
     apm = request.args.get('apm')
@@ -143,6 +142,9 @@ def predict():
     # La lista de caracteristicas que se utilizaran
     # para la predicción
     features = [[edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na, bbt, acvhc, acvhbc, dosisna, aminas,ecografia_1, ecografia_2, ecografia_3]]
+    
+    for i in range(len(features[0])):
+        features[0][i] = float(features[0][i])
     print(features)
     # Utilizamos el modelo para la predicción de los datos
     label_index = MODEL.predict(features)
@@ -154,9 +156,9 @@ def predict():
     label = MODEL_LABELS[label_index[0]]
     prob = y_proba[0][label_index[0]]
    
-    
+    print("pasamos a devolverlo")
     # Creamos y enviamos la respuesta al cliente
-    return jsonify(status='clasificado completado', clasificacion=label, probabilidad = str(prob))
+    return jsonify(status='clasificado completado', clasificacion=str(label), probabilidad = str(prob))
 
 
 @app.route("/reentrenar")
@@ -192,11 +194,3 @@ if __name__ == '__main__':
     #app.run(port=4000, ssl_context=context) #Specify variable to run function
     print("Serving on port 8080")
     serve(app, listen='localhost:8080')
-
-
-# In[3]:
-
-
-MODEL = joblib.load('./injertos-model.joblib')
-MODEL.predict([['63', '1', '24.49', '0', '0', '0', '0', '0', '15', '18', '43', '138', '0.4', '0', '2', '0', '0', '1', '0', '0']])
-

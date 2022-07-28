@@ -46,8 +46,13 @@ controller.getInjertos = async (req, res) => {
           else{
             injerto.ecografia = "No realizada";
           }
-          if(i.validez ==0){
+          if(i.validez==0){
+            console.log(i.validez)
             injerto.validez = "Válido"
+            console.log(injerto.validez)
+          }
+          else if(i.validez==null){
+            injerto.validez = "Aún no se ha validado";
           }
           else{
             injerto.validez = "No válido";
@@ -61,12 +66,6 @@ controller.getInjertos = async (req, res) => {
           else{
             injerto.acierto = "Fallo"
           }
-          if(i.validez == null){
-            injerto.validez = "Aún no se ha validado";
-          }
-          else{
-            injerto.validez = i.validez;
-          }
           if(i.probabilidad ==null){
             injerto.probabilidad = 0.0;
           }
@@ -75,7 +74,7 @@ controller.getInjertos = async (req, res) => {
           }
           
           arrayInjertos.push({...injerto});
-         
+       
         }
         
         
@@ -182,7 +181,8 @@ try {
 //crear un injerto
 controller.addInjerto = async (req, res)  => {
   try {
-    var edad = req.body.edad;
+    console.log(req.body);
+    var edad = parseInt(req.body.edad);
     if(req.body.sexo == null){
       
       res.status(400).json({ message: "No pueden ser nulos los campos" });
@@ -194,13 +194,34 @@ controller.addInjerto = async (req, res)  => {
     }
     else{
       var sexo = 0;
-    }}
+    }
     var imc = req.body.imc;
-    var hta = req.body.hta;
-    var dm = req.body.dm;
-    var dlp = req.body.dlp;
-    var apm = req.body.apm; 
-    var apq = req.body.apq; //el boton devolvera true o false
+    imc = parseFloat(imc.replace(',', '.'));
+    if(req.body.hta == "True"){
+      var hta = 1;
+    }
+    else{
+      var hta = 0;
+    }
+    if(req.body.dm == "True"){
+      var dm = 1;
+    }
+    else{
+      var dm = 0;
+    }
+    if(req.body.dlp == "True"){
+      var dlp = 1;
+    }
+    else{
+      var dlp = 0;
+    }
+    if(req.body.apm == "True"){
+      var apm = 1;
+    }
+    else{
+      var apm = 0;
+    }
+    //var apq = req.body.apq; //el boton devolvera true o false
     if(req.body.ecografia == null){
       
       res.status(400).json({ message: "No pueden ser nulos los campos" });}
@@ -221,23 +242,48 @@ controller.addInjerto = async (req, res)  => {
         var ecografia_2 = 0;
         var ecografia_3 = 1;
       }
-    }
     
     
+  
     var got = req.body.got;
+    got = parseFloat(got.replace(',', '.'));
     var gpt = req.body.gpt;
+    gpt = parseFloat(gpt.replace(',', '.'));
     var ggt = req.body.ggt;
-    var na    = req.body.na;
+    ggt = parseFloat(ggt.replace(',', '.'));
+    var na = req.body.na;
+    na = parseFloat(na.replace(',', '.'));
     var bbt = req.body.bbt;
-    var acvhc = req.body.acvhc; 
-    var acvhbc = req.body.acvhbc;
-    if(req.body.dosisna == null) {
-      var dosisna = 0.0;
+    bbt = parseFloat(bbt.replace(',', '.'));
+   
+    if(req.body.acvhc == "True"){
+      var acvhc = 1;
     }
     else{
-      dosisna = req.body.dosisna;
+      var acvhc = 0;
     }
-    var aminas = req.body.aminas;
+    if(req.body.acvhbc == "True"){
+      var acvhbc = 1;
+    }
+    else{
+      var acvhbc = 0;
+    }
+    
+    if(req.body.aminas == "True"){
+      var aminas = 1;
+      if(req.body.dosisna == null) {
+        res.status(400).json({ message: "Si existe aminas, añada la dosis" });
+      }
+      else{
+        var dosisna = req.body.dosisna;
+        dosisna = parseFloat(dosisna.replace(',', '.'));
+        
+      
+    }}
+    else{
+      var aminas = 0;
+      var dosisna = 0.0;
+    }
     console.log("se ha procesado el cuerpo")
     
     if (edad == null || imc == null || got == null || gpt == null || ggt == null || na == null || bbt == null)  {
@@ -249,19 +295,23 @@ controller.addInjerto = async (req, res)  => {
     
     
     else{
+      console.log(imc)
       console.log("ha pasado la validacion")
       
       var fecha = new Date();
-      const newInjerto = {
+      console.log("pasa la fecha")
+      /*const newInjerto = {
         edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, ecografia_1, ecografia_2, ecografia_3, fecha
     };
+    console.log(newInjerto)*/
     console.log("esperando conexion")
     const connection = await getConnection();
-    var respuesta = await connection.query('INSERT INTO injertos set ?', [newInjerto]);
+    console.log("ya conectado");
+    await connection.query('INSERT INTO injertos (edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, ecografia_1, ecografia_2, ecografia_3, fecha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, ecografia_1, ecografia_2, ecografia_3, fecha]);
     console.log("Injerto insertado");
     
     res.status(200).json({ message: "Exito. Injerto creado" });
-    }
+    }}}
   } catch (error) {
    
       res.status(500);
