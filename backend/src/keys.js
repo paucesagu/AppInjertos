@@ -4,7 +4,7 @@ module.exports ={
     database: {
         host: '127.0.0.1',
         user: 'root',
-        password: '1234',
+        password: 'password',
         database: 'injertosdb',
         port: 3306
     }

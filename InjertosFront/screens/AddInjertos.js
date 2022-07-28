@@ -73,12 +73,12 @@ const AddInjertos = ({navigation, route}) => {
   //AÑADIR INJERTO 
   const handleChange= (name, value) => setInjertos({...injertos, [name]:value,})
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
-    var resultado = crearInjerto(injertos)
-    if(localStorage.getItem("rol")=="usuario" ){
+    var resultado = await crearInjerto(injertos)
+    if(resultado.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
       navigation.navigate('HomeScreenUsuario');
     }else if(localStorage.getItem("rol")=="administrador"){
       navigation.navigate('HomeScreen');

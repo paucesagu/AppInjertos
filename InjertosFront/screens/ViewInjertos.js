@@ -31,6 +31,8 @@ const [injertos,setInjertos]= useState({
   ecografia:"",
   fecha:"",
   valido:"",
+  acierto:"",
+  probabilidad:"",
 
 });
 
@@ -61,6 +63,8 @@ const [injertos,setInjertos]= useState({
           ecografia: injertos.ecografia,
           fecha: injertos.fecha,
           valido: injertos.validez,
+          acierto: injertos.acierto,
+          probabilidad: injertos.probabilidad,
         })
        
         
@@ -79,7 +83,7 @@ const [injertos,setInjertos]= useState({
   }
 
   const handleSubmit = async () => {
-    const resultado = await predecir(route.params.id)
+    const prediccion = await predecir(route.params.id)
     if(localStorage.getItem("rol")=="usuario" ){
       navigation.navigate('HomeScreenUsuario');
     }else if(localStorage.getItem("rol")=="administrador"){
@@ -260,6 +264,14 @@ const [injertos,setInjertos]= useState({
           placeholder='DOSIS'
           editable = {false}
           value={injertos.fecha}/>
+          
+        <Text style={styles.texto}>
+        Acierto:
+      </Text>
+        <TextInput style={styles.input}
+          placeholder='Acierto'
+          editable = {false}
+          value={injertos.acierto}/>
 
     </Col>
     </Row>
@@ -282,6 +294,13 @@ const [injertos,setInjertos]= useState({
           placeholder='Válido'
           editable = {false}
           value={injertos.valido}/>
+        <Text style={styles.texto}>
+        Probabilidad:
+      </Text>
+        <TextInput style={styles.input}
+          placeholder='Probabilidad'
+          editable = {false}
+          value={injertos.probabilidad}/>
 
       <TouchableOpacity style={styles.ButtonSave} onPress={handleVolver}>
       <AntDesign name="back" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Volver</Text>

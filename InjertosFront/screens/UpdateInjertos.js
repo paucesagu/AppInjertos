@@ -95,7 +95,7 @@ const handleChangeEcografia= (valueEco) => {
     try {
     injertos.sexo=value.value
     injertos.ecografia=valueEco.valueEco
-    var result = await editarInjerto(route.params.id,injertos)
+    const result = await editarInjerto(route.params.id,injertos)
       
       if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
         navigation.navigate('HomeScreenUsuario');

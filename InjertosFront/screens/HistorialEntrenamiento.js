@@ -22,7 +22,7 @@ return(
     <Row style={{marginTop:15, padding:5}}>
       <Text style={{fontSize:"15", fontWeight:"bold"}} >Recuerde reinicar la aplicación en cada nuevo entrenamiento</Text>
       <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
-      <Text styles={{fontWeight: 'bold'}}>Entrenar nuevo modelo</Text>
+      <Text styles={{fontWeight: 'bold'}}>Reentrenar el modelo</Text>
     </TouchableOpacity>
     </Row>
         <LayoutEntrenamiento>

@@ -61,8 +61,14 @@ controller.getInjertos = async (req, res) => {
           else{
             injerto.acierto = "Fallo"
           }
+          if(i.validez == null){
+            injerto.validez = "Aún no se ha validado";
+          }
+          else{
+            injerto.validez = i.validez;
+          }
           if(i.probabilidad ==null){
-            injerto.probabilidad = "Aún no se ha validado";
+            injerto.probabilidad = 0.0;
           }
           else{
             injerto.probabilidad = i.probabilidad;
@@ -145,8 +151,14 @@ try {
     else{
       injerto.acierto = "Fallo"
     }
+    if(json[0].validez ==null){
+      injerto.validez = "Aún no se ha validado";
+    }
+    else{
+      injerto.validez = json[0].validez;
+    }
     if(json[0].probabilidad ==null){
-      injerto.probabilidad = "Aún no se ha validado";
+      injerto.probabilidad = 0.0;
     }
     else{
       injerto.probabilidad = json[0].probabilidad;
@@ -396,7 +408,8 @@ connection.query('SELECT * FROM valoraciones WHERE id_injerto = ?;', req.params.
         if (error) {
           throw error;
         }
-        var solucion = response.body;
+        var solucion = await response.body;
+        console.log(solucion);
         if(solucion['clasificacion'] == 'No valido'){
           var clasificacion = 1
         }
@@ -411,7 +424,7 @@ connection.query('SELECT * FROM valoraciones WHERE id_injerto = ?;', req.params.
         [clasificacion, probabilidad, req.params.id, usuario]);   
         
           
-        res.status(200).json(solucion);
+        res.status(200).json({message: "Exito, se ha valorado correctamente", solucion});
         
         
         
