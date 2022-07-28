@@ -31,9 +31,9 @@ controller.reentrenar = async (req, res) => {
             }else{
               //si existe un reentrenamiento devolvemos la ultima instancia reentrenada
               var indice = await obtenerUltimaInstancia();
-            
+              console.log(indice);
             }
-            console.log("Prueba")
+            
         connection.query('SELECT * FROM valoraciones where id_injerto>?', indice, async (err, result2) => {
           console.log(result2)
           console.log(indice)

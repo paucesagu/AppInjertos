@@ -47,9 +47,9 @@ controller.getInjertos = async (req, res) => {
             injerto.ecografia = "No realizada";
           }
           if(i.validez==0){
-            console.log(i.validez)
+            
             injerto.validez = "Válido"
-            console.log(injerto.validez)
+            
           }
           else if(i.validez==null){
             injerto.validez = "Aún no se ha validado";
@@ -374,18 +374,20 @@ try {
     var ecografia_2 = 0;
     var ecografia_3 = 1;
   }
+  var fecha = new Date();
   const connection = await getConnection();
   
   console.log("se ha procesado el cuerpo")
   connection.query("SELECT * FROM valoraciones where id_injerto = ?", id, async (err, result) => {
       if(result.length  > 0) { //ya se ha valorado ese injerto
         await connection.query('UPDATE valoraciones set acierto=? WHERE id_injerto = ?', [acierto, id]);
+        await connection.query('UPDATE injertos set fecha=? WHERE id = ?', [fecha, id]);
         console.log("Acierto modificado");
         res.status(200).json({ message: "Exito. Acierto modificado" });
 
     }
     else{
-      var fecha = new Date();
+      
       const newInjerto = {
         edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, ecografia_1, ecografia_2, ecografia_3, fecha
     };

@@ -11,7 +11,7 @@ const verifyToken = async (req, res, next) =>{
         const decoded = jwt.verify(token, config.SECRET);
         req.userID = decoded.id; //creamos una nueva propiedad en request que se llama userID
         var connection = await getConnection();
-        connection.query('SELECT * FROM usuarios WHERE dni = ?;', req.userID, (err, result) => {
+        await connection.query('SELECT * FROM usuarios WHERE dni = ?;', req.userID, (err, result) => {
             if(result.length == 0) {
                 res.status(400).json({ message: "No se ha encontrado el usuario" });
             }

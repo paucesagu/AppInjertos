@@ -81,7 +81,7 @@ def añadirInstancias(indice):
         auth_plugin='mysql_native_password') 
     ultIndice = 0
     cursor1=conexion1.cursor()
-    sentencia = "SELECT id, edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, validez, ecografia_1, ecografia_2, ecografia_3 FROM injertos i LEFT OUTER JOIN valoraciones v ON  v.id_injerto = i.id where id>" + str(indice)
+    sentencia = "SELECT id, edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na,bbt, acvhc, acvhbc, dosisna, aminas, validez, ecografia_1, ecografia_2, ecografia_3 FROM injertos i LEFT OUTER JOIN valoraciones v ON  v.id_injerto = i.id where id>" + str(indice) + " and validez is not null"
     #tenemos que guardar por que indice nos hemos quedado
     cursor1.execute(sentencia)
     for fila in cursor1:
@@ -117,10 +117,10 @@ def predict():
     Declaramos cuales seran los parametros que recibe la petición
     
     """
-    edad = int(request.args.get('edad'))
-    sexo = int(request.args.get('sexo'))
-    imc = float(request.args.get('imc'))
-    hta = int(request.args.get('hta'))
+    edad = request.args.get('edad')
+    sexo = request.args.get('sexo')
+    imc = request.args.get('imc')
+    hta = request.args.get('hta')
     dm = request.args.get('dm')
     dlp = request.args.get('dlp')
     apm = request.args.get('apm')
@@ -157,12 +157,14 @@ def predict():
     prob = y_proba[0][label_index[0]]
    
     print("pasamos a devolverlo")
+    print(label)
     # Creamos y enviamos la respuesta al cliente
     return jsonify(status='clasificado completado', clasificacion=str(label), probabilidad = str(prob))
 
 
 @app.route("/reentrenar")
 def reentrenar():
+    print("reentrenamos")
     #declaramos los parametros que le vendran:
     indice = request.args.get('indice') #reentrenaremos añadiendo a partir de ese índice
     start = time.time()
@@ -170,6 +172,7 @@ def reentrenar():
     #quitamos la clase del dataset, vamos a realizar 10-CV
     y = datos['class']
     X = datos.drop(['class'], axis=1)
+    print(y)
     #vamos a devolver el auc y el acc
     y_pred = cross_val_predict(MODEL, X, y, cv=10)
     acc =  metrics.accuracy_score(y, y_pred)
