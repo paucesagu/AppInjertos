@@ -8,6 +8,7 @@ import { Text, View, TouchableOpacity, StyleSheet} from 'react-native'
 
 const HistorialEntrenamiento = () => {
     const handleSubmit = async () => {
+        
         const resultado = await reentrenar()
         if(localStorage.getItem("rol")=="usuario" ){
           navigation.navigate('HomeScreenUsuario');
