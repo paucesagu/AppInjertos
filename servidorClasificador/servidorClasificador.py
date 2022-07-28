@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[2]:
 
 
 # Importamos lo 3 métodos que utilizaremos
@@ -60,41 +60,14 @@ import time
 import mysql.connector
 
 
-# In[12]:
+# In[23]:
 
 
 datos =  pd.read_csv('datos_one_hot.csv')
 datos = datos.drop(['Unnamed: 0'], axis=1)
 
 
-# In[26]:
-
-y = datos['class']
-X = datos.drop(['class'], axis=1)
-
-clf = make_pipeline(
-    make_union(
-        StackingEstimator(estimator=make_pipeline(
-            make_union(
-                make_union(
-                    FunctionTransformer(copy, validate=True),
-                    FunctionTransformer(copy, validate=True)
-                ),
-                StackingEstimator(estimator=BernoulliNB(alpha=10.0, fit_prior=False))
-            ),
-            XGBClassifier(learning_rate=0.001, max_depth=7, min_child_weight=9, n_estimators=100, nthread=1, subsample=0.4)
-        )),
-        FunctionTransformer(copy, validate=True)
-    ),
-    ZeroCount(),
-    SelectPercentile(score_func=f_classif, percentile=58),
-    XGBClassifier(learning_rate=0.5, max_depth=1, min_child_weight=6, n_estimators=100, nthread=1, subsample=0.7500000000000001)
-)
-clf.fit(X, y) 
-clf.predict([['63', '1', '24.49', '0', '0', '0', '0', '0', '15', '18', '43', '138', '0.4', '0', '2', '0', '0', '1', '0', '0']])
-
-joblib.dump(clf, 'injertos-model.joblib') 
-
+# In[24]:
 
 
 #nos conectamos a la base de datos mysql y añadimos la fila cuyo indice sea mayor al dado por parámetro para no añadir todas las de la bd y evitar que esten repetidas
@@ -119,7 +92,7 @@ def añadirInstancias(indice):
     return (ultIndice, len(datos))
 
 
-# In[27]:
+# In[26]:
 
 
 
@@ -170,7 +143,7 @@ def predict():
     # La lista de caracteristicas que se utilizaran
     # para la predicción
     features = [[edad, sexo, imc, hta, dm, dlp, apm, apq, got, gpt, ggt, na, bbt, acvhc, acvhbc, dosisna, aminas,ecografia_1, ecografia_2, ecografia_3]]
-    
+    print(features)
     # Utilizamos el modelo para la predicción de los datos
     label_index = MODEL.predict(features)
     y_proba = MODEL.predict_proba(features)
@@ -217,6 +190,13 @@ if __name__ == '__main__':
     # Iniciamos el servidor
     #context = ('./cert/cert2.pem', './cert/key2.pem') #Location of certificate & key
     #app.run(port=4000, ssl_context=context) #Specify variable to run function
-    print("Server running on 8080")
+    print("Serving on port 8080")
     serve(app, listen='localhost:8080')
+
+
+# In[3]:
+
+
+MODEL = joblib.load('./injertos-model.joblib')
+MODEL.predict([['63', '1', '24.49', '0', '0', '0', '0', '0', '15', '18', '43', '138', '0.4', '0', '2', '0', '0', '1', '0', '0']])
 
