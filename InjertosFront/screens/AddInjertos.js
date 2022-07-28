@@ -2,12 +2,12 @@ import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-nativ
 import React, {useState, useEffect} from 'react'
 import Layout from '../components/Layout'
 import {crearInjerto} from "../api"
-import { Calendar } from 'react-native-calendars'
-//import 'bootstrap/dist/css/bootstrap.min.css'
+import { Ionicons } from '@expo/vector-icons';//import 'bootstrap/dist/css/bootstrap.min.css'
 //import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import SwitchSelector from "react-native-switch-selector";
 import RNPickerSelect from "react-native-picker-select";
 
 
@@ -19,27 +19,27 @@ const AddInjertos = ({navigation, route}) => {
     "edad":"",
     "sexo":"", 
     "imc":"",
-    "hta":"",
-    "dm":"",
-    "dlp":"",
-    "apm":"",
-    "apq":"",
+    "hta":"True",
+    "dm":"True",
+    "dlp":"True",
+    "apm":"True",
+    "apq":"True",
     "got":"",
     "gpt":"",
     "ggt":"",
     "na":"",
     "bbt":"",
-    "acvhc":"",
-    "acvhbc":"",
-    "aminas":"",
+    "acvhc":"True",
+    "acvhbc":"True",
+    "aminas":"True",
     "dosisna":"",
-    "ecografia":"",
+    "ecografia":"Normal",
 
   });
 
   //Obtener valor de SEXO del SELECT
   const [value, setSexo] = useState({
-    value:""
+    value:null
   });
   
   const handleChangeSexo= (value) => {
@@ -53,21 +53,6 @@ const AddInjertos = ({navigation, route}) => {
     color: '#9EA0A4',
   };
 
-  //Obtener valor de ECOGRAFIA del SELECT
-  const placeholderEco = {
-    label: 'Tipo de Ecografía...',
-    value: "",
-    color: '#9EA0A4',
-  };
-
-  const [valueEco, setEcografia] = useState({
-    valueEco:""
-  });
-
-
-  const handleChangeEcografia= (valueEco) => {
-    setEcografia({valueEco})
-  } 
 
   //AÑADIR INJERTO 
   const handleChange= (name, value) => setInjertos({...injertos, [name]:value,})
@@ -75,7 +60,8 @@ const AddInjertos = ({navigation, route}) => {
   const handleSubmit = async () => {
 
     injertos.sexo=value.value
-    injertos.ecografia=valueEco.valueEco
+    console.log(injertos)
+
     var resultado = await crearInjerto(injertos)
     if(resultado.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
       navigation.navigate('HomeScreenUsuario');
@@ -109,134 +95,322 @@ const AddInjertos = ({navigation, route}) => {
     textAlign: 'center',
     }}>Rellene todos los campos para poder añadir correctamente un Injerto.</Container>
     </Row>
-    <View style={{flex: 1,flexDirection: 'row',flexWrap: 'wrap',alignItems: 'flex-start', justifyContent: 'center'}}>
-      <View style={{ width: '50%', marginTop:50 }}>
+    <View style={{alignItems: 'center'}}>
 
-          <TextInput style={styles.input}
-          placeholder='Edad'
-          onChangeText={text => handleChange('edad', text)}/>
+<Row style={{display:'flex'}}>
+  
+  <Col md={6} style={{display:'grid'}}>
+  <View>
+  <Text style={styles.texto}>
+    Edad:
+  </Text>
+    <TextInput style={styles.input}
+      placeholder='Edad'
+      onChangeText={text => handleChange('edad', text)}/>
+  </View>
 
-          <RNPickerSelect
-          placeholder={placeholderSexo}
-                 onValueChange={(value) => handleChangeSexo(value)}
-                 style={{
-                  inputWeb: {
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  },
-                  inputIOS:{
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  },
-                  inputAndroid:{
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  }
-                }}
-                 items={[
-                     { label: "Masculino", value: "Masculino" },
-                     { label: "Femenino", value: "Femenino" },
-                     
-                 ]}
-             />
-          
-          <TextInput style={styles.input}
-          placeholder='IMC'
-          onChangeText={text => handleChange('imc', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    IMC:
+  </Text>
+  <TextInput style={styles.input}
+    placeholder='IMC'
+    onChangeText={text => handleChange('imc', text)}/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='HTA'
-          onChangeText={text => handleChange('hta', text)}/>
-          
-          <TextInput style={styles.input}
-          placeholder='DM'
-          onChangeText={text => handleChange('dm', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    HTA:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('hta', value)}
 
-          <TextInput style={styles.input}
-          placeholder='DLP'
-          onChangeText={text => handleChange('dlp', text)}/>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='APM'
-          onChangeText={text => handleChange('apm', text)}/>
-          
+  <View>
+  <Text style={styles.texto}>
+    DM:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('dm', value)}
 
-          <TextInput style={styles.input}
-          placeholder='APQ'
-          onChangeText={text => handleChange('apq', text)}/>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='GOT'
-          onChangeText={text => handleChange('got', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    GPT:
+  </Text>
+    <TextInput style={styles.input}
+    placeholder='GPT'
+    onChangeText={text => handleChange('gpt', text)}/>
+  </View>
 
-      </View>
-      
-      <View style={{ width: '50%', marginTop: 50,}}>
+  <View>
+  <Text style={styles.texto}>
+    GGT:
+  </Text>
+    <TextInput style={styles.input}
+    placeholder='GGT'
+    onChangeText={text => handleChange('ggt', text)}/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='GPT'
-          onChangeText={text => handleChange('gpt', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    NA:
+  </Text>
+    <TextInput style={styles.input}
+    placeholder='NA'
+    onChangeText={text => handleChange('na', text)}/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='GGT'
-          onChangeText={text => handleChange('ggt', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    BBT:
+  </Text>
+    <TextInput style={styles.input}
+    placeholder='BBT'
+    onChangeText={text => handleChange('bbt', text)}/>
+  </View>
+  </Col>
+  
 
-          <TextInput style={styles.input}
-          placeholder='NA'
-          onChangeText={text => handleChange('na', text)}/>
+<Col md={6} style={{display:'grid', marginLeft:10}}>
+   <View>
+    <Text style={{fontWeight: 'bold'}}>
+      Género:
+    </Text>
+      <RNPickerSelect
+        placeholder={placeholderSexo}
+              onValueChange={(value) => handleChangeSexo(value)}
+              style={{
+                inputWeb: {
+                  width:'100%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,
+                },
+                inputIOS:{
+                  width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
+                },
+                inputAndroid:{
+                  width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
+                }
+              }}
+              items={[
+                  { label: "Masculino", value: "Masculino" },
+                  { label: "Femenino", value: "Femenino" },            
+      ]}/>
+  </View>
+  <View>
+  <Text style={styles.texto}>
+    DLP:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('dlp', value)}
 
-          <TextInput style={styles.input}
-          placeholder='BBT'
-          onChangeText={text => handleChange('bbt', text)}/>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+ 
 
-          <TextInput style={styles.input}
-          placeholder='ACVHC'
-          onChangeText={text => handleChange('acvhc', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    APM:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('apm', value)}
 
-          <TextInput style={styles.input}
-          placeholder='ACVHBC'
-          onChangeText={text => handleChange('acvhbc', text)}/>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
 
-          <TextInput style={styles.input}
-          placeholder='AMINAS'
-          onChangeText={text => handleChange('aminas', text)}/>
+  <View>
+  <Text style={styles.texto}>
+    APQ:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('apq', value)}
 
-          <TextInput style={styles.input}
-          placeholder='DOSIS'
-          onChangeText={text => handleChange('dosisna', text)}/>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
 
-<RNPickerSelect
-          placeholder={placeholderEco}
-                onValueChange={(valueEco) => handleChangeEcografia(valueEco)}
-                 style={{
-                  inputWeb: {
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  },
-                  inputIOS:{
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  },
-                  inputAndroid:{
-                    width:'95%',backgroundColor:'#FFFFFF',fontSize:15,marginBottom:7,borderWidth: 1, borderColor:'#9af88c',height:30,textAlign: 'center',padding: 4,borderRadius:5,flex: 1,
-                  }
-                }}
-                 items={[
-                     { label: "Normal", value: "Normal" },
-                     { label: "Patológica", value: "Patológica" },
-                     { label: "No Realizada", value: "No realizada" },
+  <View>
+  <Text style={styles.texto}>
+    GOT:
+  </Text>
+    <TextInput style={styles.input}
+      placeholder='GOT'
+      onChangeText={text => handleChange('got', text)}/>
+  </View>
 
-                     
-                 ]}
-             />
-      </View>
-           
-      <View style={{width: '50%'}}>
+  <View>
+  <Text style={styles.texto}>
+    ACVHC:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('acvhc', value)}
 
-      <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
-        <Text styles={{fontWeight: 'bold'}}>Añadir Injerto</Text>
-      </TouchableOpacity>
-      </View>
-    </View>
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+
+  <View>
+  <Text style={styles.texto}>
+    ACVHBC:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('acvhbc', value)}
+
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+
+  <View>
+  <Text style={styles.texto}>
+    AMINAS:
+  </Text>
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('aminas', value)}
+
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+
+  
+
+</Col>
+</Row>
+<Row >
+  
+  <Col>
+ <View>
+  <Text style={styles.texto}>
+    DOSIS:
+  </Text>
+    <TextInput style={styles.input}
+    placeholder='DOSIS'
+    onChangeText={text => handleChange('dosisna', text)}/>
+  </View>
+
+  <View>
+  <Text style={{fontWeight: 'bold'}}>
+    Ecografía:
+  </Text>
+
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('ecografia', value)}
+
+                textColor='#7a44cf'
+                selectedColor='#9af88c'
+                buttonColor='#FFFFFF'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Normal", value: "Normal" },
+                  { label: "Patológica", value: "Patológica" },
+                  { label: "No Realizada", value: "No realizada" }, 
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+  <Row>
+
+    <View>
+        <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
+          <Ionicons name="add-circle-outline" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Añadir Injerto</Text>
+        </TouchableOpacity>
+  </View>
+  
+  </Row>  
+  </Col> 
+</Row>
+</View>
     </View>
   )
 }
-
 
 const styles = StyleSheet.create({
   input:{
