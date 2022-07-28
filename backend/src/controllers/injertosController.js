@@ -116,7 +116,7 @@ controller.getInjertos = async (req, res) => {
           }
           var probabilidad = i.probabilidad;
           if( probabilidad==null){
-            injerto.probabilidad = String(0) + "%";
+            injerto.probabilidad = "No disponible";
           }
           else{
             probabilidad = probabilidad*100;
@@ -263,7 +263,7 @@ try {
     }
     var probabilidad = json[0].probabilidad;
           if( probabilidad==null){
-            injerto.probabilidad = String(0) + "%";
+            injerto.probabilidad = "No disponible";
           }
           else{
             probabilidad = probabilidad*100;
