@@ -103,21 +103,23 @@ const [injertos,setInjertos]= useState({
     const result2 = await predecir(route.params.id)
       var mensaje = result2.message;
       var prediccion = result2.solucion;
+      
+     
+    if(mensaje.includes("Exito") ){
       var clasificacion = prediccion.clasificacion;
       clasificacion = clasificacion.toUpperCase();
       var probabilidad = prediccion.probabilidad;
       probabilidad = String(probabilidad*100) + "%"
-      mensajeCla = "El injerto es: " + clasificacion + " con una probabilidad de: " + probabilidad
-    
-
-
+      var mensajeCla = "El injerto es: " + clasificacion + " con una probabilidad de: " + probabilidad
+    console.log(mensajeCla)
+      swal("Ehorabuena", mensajeCla, "success");
+      if(localStorage.getItem("rol")=="usuario"){
+        navigation.navigate('HomeScreenUsuario');
+      }
+      else{
+        navigation.navigate('HomeScreen');
+      }
       
-    if(mensaje.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
-      swal("Ehorabuena", mensajeCla, "success");
-      navigation.navigate('HomeScreenUsuario');
-    }else if( mensaje.includes("Exito") && localStorage.getItem("rol")=="administrador"){
-      swal("Ehorabuena", mensajeCla, "success");
-      navigation.navigate('HomeScreen');
     }
     else{
       swal("Ha habido un error", mensaje, "error");
