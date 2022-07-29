@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import { AntDesign } from '@expo/vector-icons';
 import {predecir} from "../api"
 import swal from 'sweetalert'
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 
 const ViewInjertos = ({navigation, route}) => {
@@ -138,7 +140,7 @@ const [injertos,setInjertos]= useState({
   }
 
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center',backgroundColor: 'white', width: '100%', height: '100%'}}>
       <Row>
         <Text style={{fontSize:"15", fontWeight:"bold"}} >Recuerde validar el injerto</Text>
         <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
@@ -344,11 +346,14 @@ const [injertos,setInjertos]= useState({
       <TouchableOpacity style={styles.ButtonSave} onPress={handleVolver}>
       <AntDesign name="back" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Volver</Text>
       </TouchableOpacity>   
-      <Button
-  onPress={handleEditar}
-  title="Editar"
-  color="#fc9303"
-/>
+        <Row> 
+        <View style={{width: '100%'}}>
+        <TouchableOpacity style={styles.ButtonSave} onPress={handleEditar}>
+          <FontAwesome5 name="edit" size={24} color="black" />
+          <Text styles={{fontWeight: 'bold', marginLeft:4}}>Modificar Injerto</Text>
+        </TouchableOpacity>
+        </View>
+        </Row>
       
     </Col>
     </Row>

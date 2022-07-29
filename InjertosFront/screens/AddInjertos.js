@@ -1,20 +1,21 @@
 import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Layout from '../components/Layout'
+import { useNavigation, DrawerActions } from '@react-navigation/native';
+
 import {crearInjerto} from "../api"
 import { Ionicons } from '@expo/vector-icons';//import 'bootstrap/dist/css/bootstrap.min.css'
 //import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 import SwitchSelector from "react-native-switch-selector";
 import RNPickerSelect from "react-native-picker-select";
 import swal from 'sweetalert'
-
+import HomeScreen from './HomeScreen';
 
 const AddInjertos = ({navigation, route}) => {
-
-  
 
   const [injertos,setInjertos]= useState({
     edad:"",
@@ -67,15 +68,19 @@ const AddInjertos = ({navigation, route}) => {
     if(resultado.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
       swal("Enhorabuena", resultado, "success");
       navigation.navigate('HomeScreenUsuario');
+      
     }else if(resultado.includes("Exito") && localStorage.getItem("rol")=="administrador"){
       swal("Enhorabuena", resultado, "success");
       navigation.navigate('HomeScreen');
+      //this.props.navigation.push('HomeScreen')
+
     }
     else{
       swal("Ha habido un error", resultado, "error");
     }
     
   }
+  
   useEffect(()=>{
     if(route.params && route.params.id){
       navigation.setOptions({headerTitle:'Modificando pantalla'})
@@ -168,7 +173,7 @@ else{
 
   return (
     
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center',backgroundColor: 'white'}}>
 
 <Row>
     <Container style={{backgroundColor: 'white', 

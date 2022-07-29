@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {useNavigation} from '@react-navigation/native'
+import Row from 'react-bootstrap/Row';
 import { Feather, FontAwesome5  } from '@expo/vector-icons';
 
 const InjertosItem = ({injertos}) => {
@@ -12,8 +13,10 @@ const InjertosItem = ({injertos}) => {
     let color;
     if(injertos.validez == "Válido"){
       color ="#00a135"
-    }else{
+    }else if(injertos.validez=="No válido"){
       color="#ff0000"
+    }else{
+      color="#000000"
     }
     return color
   }
@@ -22,7 +25,7 @@ const InjertosItem = ({injertos}) => {
     <View style={styles.item}>
      
       <View style={styles.container}>
-        <TouchableOpacity style={{paddingRight:30}} onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})} >
+        <TouchableOpacity style={{paddingRight:30, textAlign: "left"}} onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})} >
           <View style={{flexDirection: 'row',display: 'block'}}>
             
             <Text style={{fontWeight: 'bold'}}>ID: </Text>
@@ -49,14 +52,16 @@ const InjertosItem = ({injertos}) => {
             <Text id="injerto" style={{fontSize:15,color: getBackgroundColor()}}>{injertos.validez}</Text>
           </View>
         </TouchableOpacity>
-      
+      <View>
+        <Row style={{display:"flex"}}>
      <TouchableOpacity style={{paddingRight:20}} onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})}>
      <FontAwesome5 name="eye" size={30} color="black" />
      </TouchableOpacity>
      <TouchableOpacity onPress={() => navigation.navigate('UpdateInjertos', {id: injertos.id})}>
         <Feather name="edit" size={30} color="black" />
      </TouchableOpacity>
-    
+     </Row>
+    </View>
       </View>
     </View>
   )
@@ -65,9 +70,9 @@ const styles = StyleSheet.create({
 
     item:{
         backgroundColor:"#FFFFFF",
-        padding:20,
+        width:"33%",
+        padding:10,
         marginVertical:8,
-        borderRadius:5,
         textAlign:"left",
         borderWidth: 3,
         borderColor:'#9af88c',

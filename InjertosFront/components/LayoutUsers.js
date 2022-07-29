@@ -10,7 +10,7 @@ const LayoutUsers = ({children}) => {
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor:'#EEEDED',
+        backgroundColor:'white',
         padding:20,
         flex:1,
         alignItems: 'center',

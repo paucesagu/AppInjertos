@@ -88,7 +88,7 @@ const UpdateUsers = ({navigation, route}) => {
   return (
     <View style={{alignItems: 'center',
   justifyContent: 'center',
-  textAlign:'left',}}>
+  textAlign:'left',backgroundColor: 'white', width: '100%', height: '100%'}}>
 
     <View style={{flex: 1,flexDirection: 'row',flexWrap: 'wrap',alignItems: 'flex-start', justifyContent: 'center'}}>
       
@@ -124,11 +124,6 @@ const UpdateUsers = ({navigation, route}) => {
           onChangeText={text => handleChange('email', text)}
           value={usuarios.email}/>
 
-          <Text style={{fontWeight: 'bold'}}>Contraseña: </Text>
-          <TextInput style={styles.input}
-          placeholder='Contraseña'
-          onChangeText={text => handleChange('contraseña', text)}
-          value={usuarios.contraseña}/>
 
 
           <Text style={{fontWeight: 'bold'}}>Seleccionar Rol: </Text>

@@ -235,7 +235,7 @@ else{
 
   return (
     
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center', backgroundColor: 'white', width: '100%', height: '100%'}}>
 
 <Row>
     <Container style={{backgroundColor: 'white', 

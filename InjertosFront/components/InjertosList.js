@@ -1,9 +1,9 @@
-import { FlatList, RefreshControl, Text, View, StyleSheet, Dimensions} from 'react-native'
+import { FlatList, RefreshControl, TouchableOpacity, View, StyleSheet, Dimensions, Text} from 'react-native'
 import React , {useState, useEffect} from 'react'
 import {getInjertos} from '../api';
 import InjertosItem from './InjertosItem'
-import {injertosNoEntrenados} from '../api'
 import swal from 'sweetalert'
+import { EvilIcons } from '@expo/vector-icons';
 
 
 
@@ -44,11 +44,17 @@ useEffect(() => {
   const {height, width} = Dimensions.get('window');
   const itemWidth = (width - 15) / 2;
   return (
-    <View style={{ flex: 1, margin: 5, backgroundColor: '#ddd', minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
+    <View>
+    <TouchableOpacity style={{display: 'block'}} onPress={loadInjertos}>
+        <EvilIcons name="refresh" size={24} color="black" />
+        <Text styles={{fontWeight: 'bold'}}>Actualizar</Text>
+      </TouchableOpacity>    
+      <View style={{ flex: 1, margin: 5 ,minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
     <FlatList
-    style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}
+    style={{width:'100%', height:'100%', display:'contents'}}
             data={injertos}
             numColumns = {3}
+            columnWrapperStyle={styles.row}
             keyExtractor={(item) => item.id +''}
             renderItem = {renderItem}
             refreshControl={
@@ -60,6 +66,7 @@ useEffect(() => {
               />
             }
     />
+    </View>
     </View>
   )
 }
@@ -84,7 +91,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems:'center',
-  }
+  },
+  row: {
+    flex: 1,
+    justifyContent: "space-around"
+}
 })
 
 export default InjertosList;

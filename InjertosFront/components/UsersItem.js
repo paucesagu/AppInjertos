@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import Row from 'react-bootstrap/Row';
 import {useNavigation} from '@react-navigation/native'
 import { Feather, FontAwesome5  } from '@expo/vector-icons';
 
 const UsersItem = ({usuarios}) => {
 
     const navigation= useNavigation()
+    console.log(usuarios.dni)
 
     return (
         <View style={styles.item}>
@@ -24,22 +26,19 @@ const UsersItem = ({usuarios}) => {
                 <Text>{usuarios.apellidos} </Text>
               </View>
               <View style={{flexDirection: 'row',display: 'block'}}>
-                <Text>Email: </Text>
-                <Text>{usuarios.email}</Text>
-              </View>
-              <View style={{flexDirection: 'row',display: 'block'}}>
                 <Text>Rol: </Text>
                 <Text>{usuarios.rol}</Text>
               </View>
             
             </TouchableOpacity>
-          
+            <Row style={{display:"flex"}}>
          <TouchableOpacity style={{paddingRight:10}} onPress={() => navigation.navigate('ViewUser', {dni: usuarios.dni})}>
             <FontAwesome5 name="eye" size={30} color="black" />
          </TouchableOpacity>
          <TouchableOpacity style={{paddingRight:10}} onPress={() => navigation.navigate('UpdateUsers', {dni: usuarios.dni})}>
             <Feather name="edit" size={30} color="black" />
          </TouchableOpacity>
+         </Row>
         
           </View>
         </View>
@@ -48,14 +47,14 @@ const UsersItem = ({usuarios}) => {
     const styles = StyleSheet.create({
     
         item:{
-            backgroundColor:"#FFFFFF",
-            padding:20,
-            marginVertical:8,
-            borderRadius:5,
-            textAlign:"left",
-            borderWidth: 3,
-            borderColor:'#9af88c',
-            borderRadius:10,   
+          backgroundColor:"#FFFFFF",
+          width:"50%",
+          padding:10,
+          marginVertical:8,
+          textAlign:"left",
+          borderWidth: 3,
+          borderColor:'#9af88c',
+          borderRadius:10,  
         },
         container:{
           alignItems: 'left',

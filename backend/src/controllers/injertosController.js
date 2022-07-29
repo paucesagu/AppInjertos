@@ -100,13 +100,13 @@ controller.getInjertos = async (req, res) => {
             
           }
           else if(i.validez==null){
-            injerto.validez = "Aún no se ha validado";
+            injerto.validez = "No validado";
           }
           else{
             injerto.validez = "No válido";
           }
           if(i.acierto ==null){
-            injerto.acierto = "Aún no se ha añadido"
+            injerto.acierto = "No añadido "
           }
           else if(i.acierto ==1){
             injerto.acierto = "Acierto";

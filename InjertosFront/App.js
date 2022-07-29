@@ -47,44 +47,45 @@ const App = ()=> {
   return(
     <NavigationContainer>
       <Stack.Navigator>
-
         <Stack.Screen name="LoginScreen" 
-        title="Login"
-        component = {LoginScreen} 
-        options={{
-          title: 'Login',
-        headerStyle:{backgroundColor: "#9af88c"},
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          
-        },headerTitleAlign: 'center',}}/>
-
-        <Stack.Screen 
-        name="HomeScreen"
-        component = {HomeScreen} 
-        options={ ({navigation}) => ({
-          title:"Inicio",
-          headerStyle: {backgroundColor: "#9af88c"},
-          headerTitleAlign: 'center',
-          headerTitleStyle:{
+          title="Login"
+          component = {LoginScreen} 
+          options={{
+            title: 'Login',
+          headerStyle:{backgroundColor: "#9af88c"},
+          headerTitleStyle: {
             fontWeight: 'bold',
-          },
-          headerLeft: () => (
-          <TouchableOpacity style={{display:'block', marginLeft:3}}>
-            <AntDesign style={{marginLeft:10}} name="addfile" size={30} color="black" onPress={() => navigation.navigate("AddInjertos")} />
             
-            <Feather style= {{marginLeft:30}} name="users" size={30} color="black" onPress={() => navigation.navigate("ListadoUsers")} />   
+          },headerTitleAlign: 'center',}}/>
+        <Stack.Screen 
+          name="HomeScreen"
+          component = {HomeScreen} 
+          options={ ({navigation}) => ({
+            title:"Inicio",
+            headerStyle: {backgroundColor: "#9af88c"},
+            headerTitleAlign: 'center',
+            headerTitleStyle:{
+              fontWeight: 'bold',
+            },
+            headerLeft: () => (
+            <TouchableOpacity style={{display:'block', marginLeft:3}}>
+              <AntDesign style={{marginLeft:10}} name="addfile" size={30} color="black" onPress={() => navigation.navigate("AddInjertos")} />
+              
+              <Feather style= {{marginLeft:30}} name="users" size={30} color="black" onPress={() => navigation.navigate("ListadoUsers")} />   
 
-            <FontAwesome5 style= {{marginLeft:30}} name="history" size={28} color="black" onPress={() => navigation.navigate("HistorialEntrenamiento")} />
+              <FontAwesome5 style= {{marginLeft:30}} name="history" size={28} color="black" onPress={() => navigation.navigate("HistorialEntrenamiento")} />
+              </TouchableOpacity>
+            
+          ),
+          headerRight: () => (
+            <TouchableOpacity style={{display:'block', marginRight:'10px'}} onPress={onLogOut}>
+              <AntDesign name="logout" size={24} color="black" /><Text style={{marginLeft:3,fontSize:'large', fontWeight:'bold'}}>Salir</Text>
             </TouchableOpacity>
-          
-        ),
-        headerRight: () => (
-          <TouchableOpacity style={{display:'block', marginRight:'10px'}} onPress={onLogOut}>
-            <AntDesign name="logout" size={24} color="black" /><Text style={{marginLeft:3,fontSize:'large', fontWeight:'bold'}}>Salir</Text>
-          </TouchableOpacity>
-        )
+          )
       })}/>
+        
+
+        
       
       <Stack.Screen 
         name="HomeScreenUsuario"

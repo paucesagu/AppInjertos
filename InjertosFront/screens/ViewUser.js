@@ -1,10 +1,12 @@
 import { View, TextInput, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { getUser } from "../api"
+import { deleteUsuario } from "../api"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AntDesign } from '@expo/vector-icons';
 import swal from 'sweetalert'
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ViewUser = ({navigation, route}) => {
 
@@ -55,10 +57,17 @@ const ViewUser = ({navigation, route}) => {
     
         navigation.navigate('UpdateUsers', {dni: usuarios.dni})
         }
+      const handleEliminar = () => {
+
+          const result= deleteUsuario(usuarios.dni)
+         
+    
+          navigation.navigate('ListadoUsers')
+          }
     
 
   return (
-    <View style={{alignItems: 'center'}}>
+    <View style={{alignItems: 'center', backgroundColor: 'white', width: '100%', height: '100%'}}>
 
     <Row style={{display:'flex'}}>
       <Col md={6} style={{display:'grid'}}>
@@ -96,14 +105,6 @@ const ViewUser = ({navigation, route}) => {
           value={usuarios.telefono}/>
 
       <Text style={styles.texto}>
-        Contraseña:
-      </Text>
-        <TextInput style={styles.input}
-        placeholder='CONTRASEÑA'
-        editable = {false}
-        value={usuarios.contraseña}/>
-
-      <Text style={styles.texto}>
         ROL:
       </Text>
         <TextInput style={styles.input}
@@ -119,11 +120,22 @@ const ViewUser = ({navigation, route}) => {
         </TouchableOpacity> 
         
       </Row>
-      <Button
-  onPress={handleEditar}
-  title="Editar"
-  color="#fc9303"
-/>
+      <Row> 
+        <View style={{width: '100%'}}>
+        <TouchableOpacity style={styles.ButtonSave} onPress={handleEditar}>
+          <FontAwesome5 name="user-edit" size={24} color="black" />
+          <Text styles={{fontWeight: 'bold', marginLeft:4}}>Modificar Usuario</Text>
+        </TouchableOpacity>
+        </View>
+        </Row>
+        <Row> 
+        <View style={{width: '100%'}}>
+        <TouchableOpacity style={styles.ButtonDelete} onPress={handleEliminar}>
+          <FontAwesome5 name="trash" size={24} color="black" />
+          <Text styles={{fontWeight: 'bold', marginLeft:4}}>Eliminar Usuario</Text>
+        </TouchableOpacity>
+        </View>
+        </Row>
     </View>
   )
 }
@@ -163,8 +175,18 @@ const styles = StyleSheet.create({
       backgroundColor:'#9af88c',
       width:'100%',
       textAlign:'center',
-      display: 'block',
-      
+      display: 'block', 
+    },
+    ButtonDelete: {
+      marginTop:5,
+      padding:20,
+      borderRadius:10,
+      marginBottom:3,
+      backgroundColor:'red',
+      width:'100%',
+      textAlign:'center',
+      display: 'block', 
+      color:"white",
     },
     ButtonText:{
       fontWeight:'bold',
