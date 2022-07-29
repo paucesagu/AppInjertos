@@ -1,8 +1,9 @@
-import { FlatList, RefreshControl, Text, View, StyleSheet} from 'react-native'
+import { FlatList, RefreshControl, Text, View, StyleSheet, Dimensions} from 'react-native'
 import React , {useState, useEffect} from 'react'
 import {getInjertos} from '../api';
 import InjertosItem from './InjertosItem'
 import {injertosNoEntrenados} from '../api'
+import swal from 'sweetalert'
 
 
 
@@ -12,9 +13,18 @@ const InjertosList = () => {
   const [refreshing,setRefreshing] = useState(false)
 
   const loadInjertos = async () =>{
-      const data = await getInjertos();
-      setInjertos(data);
+      const result = await getInjertos();
+      var mensaje = result.message;
+      var data = result.arrayInjertos;
+      if(mensaje.includes("Exito")){
+        setInjertos(data);
+      }
+      else{
+        swal("Ha habido un error", mensaje, "error");
+      }
+     
   }
+    
 
   
 
@@ -31,11 +41,14 @@ useEffect(() => {
     await loadInjertos()
     setRefreshing(false);
   })
+  const {height, width} = Dimensions.get('window');
+  const itemWidth = (width - 15) / 2;
   return (
-    <View>
+    <View style={{ flex: 1, margin: 5, backgroundColor: '#ddd', minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
     <FlatList
     style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}
             data={injertos}
+            numColumns = {3}
             keyExtractor={(item) => item.id +''}
             renderItem = {renderItem}
             refreshControl={

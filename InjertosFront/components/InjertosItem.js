@@ -11,7 +11,7 @@ const InjertosItem = ({injertos}) => {
   const getBackgroundColor = () => {
     let color;
     if(injertos.validez == "Válido"){
-      color ="#90EE90"
+      color ="#00a135"
     }else{
       color="#ff0000"
     }

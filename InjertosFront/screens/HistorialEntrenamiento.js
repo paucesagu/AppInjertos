@@ -4,16 +4,21 @@ import LayoutEntrenamiento from "../components/LayoutEntrenamiento";
 import { reentrenar } from '../api';
 import Row from 'react-bootstrap/Row';
 import { Text, View, TouchableOpacity, StyleSheet} from 'react-native'
+import swal from 'sweetalert'
 
 
 const HistorialEntrenamiento = () => {
     const handleSubmit = async () => {
-        
+      
         const resultado = await reentrenar()
-        if(localStorage.getItem("rol")=="usuario" ){
-          navigation.navigate('HomeScreenUsuario');
-        }else if(localStorage.getItem("rol")=="administrador"){
-          navigation.navigate('HomeScreen');
+        var mensaje = resultado.message;
+      var reentrenamiento = resultado.solucion;
+        if(mensaje.includes('Exito')){
+          swal("Enhorabuena", mensaje, "success");
+          navigation.navigate('HistorialEntrenamiento');
+        }
+        else{
+          swal("Ha habido un error", mensaje, "error");
         }
        
       }

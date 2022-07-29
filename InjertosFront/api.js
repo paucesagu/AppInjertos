@@ -4,13 +4,18 @@ export const getInjertos = async () =>{
     var resultado;
     await fetch(API, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
       response=>response.json()
-    ).then(data=>resultado = data.arrayInjertos)
+    ).then(data=>resultado = data)
+    console.log(resultado)
     return await resultado;
     
 }
 export const getInjerto = async (injertoId) =>{
-    const res = await fetch(`${API}/${injertoId}`, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+  var resultado;
+    await fetch(`${API}/${injertoId}`, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+      response=>response.json()
+    ).then(data=>resultado = data)
+    console.log(resultado)
+    return await resultado;
     
 }
 export const crearInjerto = async (newInjerto) =>{
@@ -33,6 +38,7 @@ export const crearInjerto = async (newInjerto) =>{
 export const editarInjerto = async (injertoId, newInjerto) => {
   var res = "";
     console.log(injertoId, newInjerto)
+    console.log(localStorage.getItem("token"));
     await fetch(`${API}/${injertoId}`, {
       method: "PUT",
       headers: {
@@ -49,9 +55,12 @@ export const editarInjerto = async (injertoId, newInjerto) => {
   };
 
   export const predecir = async (injertoId) =>{
-    const res = await fetch(`${API}/${injertoId}/predecir`, {
-      method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+    var resultado;
+    await fetch(`${API}/${injertoId}/predecir`,{method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+      response=>response.json()
+    ).then(data=>resultado = data)
+    console.log(resultado)
+    return await resultado;
     
 }
 
@@ -112,13 +121,22 @@ export const logout = async () =>{
 const API2 = "http://localhost:8000/usuarios";
 
 export const getUsuarios = async () =>{
-    const res = await fetch(API2, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+  var resultado;
+  await fetch(API2, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+    response=>response.json()
+  ).then(data=>resultado = data)
+  console.log(resultado)
+  return await resultado;
     
 }
 export const getUser = async (usuarioId) =>{
-    const res = await fetch(`${API2}/${usuarioId}`, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+  var resultado;
+  await fetch(`${API2}/${usuarioId}`, {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+    response=>response.json()
+  ).then(data=>resultado = data)
+  console.log(resultado)
+  return await resultado;
+
     
 }
 
@@ -169,7 +187,7 @@ export const editarUsuario = async (usuarioId, newUser) => {
   console.log(res)
   return await res;
   };
-
+/*
   export const modificarContraseña = async (usuarioId, newPassword) => {
     console.log(usuarioId, newPassword)
     var res = "";
@@ -186,14 +204,17 @@ export const editarUsuario = async (usuarioId, newUser) => {
   })
   console.log(res)
   return await res;
-  };
+  };*/
 
   //reentrenar
 
 export const reentrenar = async () =>{
-    const res = await fetch("http://localhost:8000/reentrenar", {
-      method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
-    return await res.json();
+  var resultado;
+  await fetch("http://localhost:8000/reentrenar",{method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+      response=>response.json()
+    ).then(data=>resultado = data)
+    console.log(resultado)
+    return await resultado;
     
 }
 
@@ -203,8 +224,22 @@ export const injertosNoEntrenados = async () =>{
   return await res.json();
   
 }
-export const getReentrenamientos = async () =>{
-  const res = await fetch("http://localhost:8000/reentrenamientos", {method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
+
+
+export const injertosNoValorados = async () =>{
+  const res = await fetch("http://localhost:8000/injertosNoValorados", {
+    method: 'GET', headers: {"authorization": localStorage.getItem("token")}});
   return await res.json();
+  
+}
+
+
+export const getReentrenamientos = async () =>{
+  var resultado;
+  await fetch("http://localhost:8000/reentrenamientos", {method: 'GET', headers: {"authorization": localStorage.getItem("token")}}).then(
+    response=>response.json()
+  ).then(data=>resultado = data)
+  console.log(resultado)
+  return await resultado;
   
 }

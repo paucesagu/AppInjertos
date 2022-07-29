@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native'
 import { login } from "../api"
 import { AntDesign } from '@expo/vector-icons'
 import { TextField } from '@mui/material';
+import swal from 'sweetalert'
 
 
 const LoginScreen = ({navigation}) => {
@@ -31,7 +32,7 @@ const onSubmit = async () =>{
       navigation.navigate('HomeScreen');
     }
     else{
-      alert(result);
+      swal("Ha habido un error", result, "error");
     }
     
     

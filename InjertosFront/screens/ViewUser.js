@@ -1,9 +1,10 @@
-import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { getUser } from "../api"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AntDesign } from '@expo/vector-icons';
+import swal from 'sweetalert'
 
 const ViewUser = ({navigation, route}) => {
 
@@ -21,7 +22,10 @@ const ViewUser = ({navigation, route}) => {
         if(route.params && route.params.dni){  
           ( async () => {
             
-            const usuario = await getUser(route.params.dni)
+            const result = await getUser(route.params.dni)
+            var mensaje = result.message;
+      var usuario = result.result2;
+      if(mensaje.includes("Exito")){
             console.log(usuario)
             setUsers({
               dni: usuario.dni,
@@ -37,7 +41,9 @@ const ViewUser = ({navigation, route}) => {
 
             
             
-          })();
+         }else{
+          swal("Ha habido un error", mensaje, "error");
+         } })();
         }
       }, []);
 
@@ -45,6 +51,10 @@ const ViewUser = ({navigation, route}) => {
       const handleVolver = () => {
         navigation.navigate('ListadoUsers')
       }
+      const handleEditar = () => {
+    
+        navigation.navigate('UpdateUsers', {dni: usuarios.dni})
+        }
     
 
   return (
@@ -73,7 +83,7 @@ const ViewUser = ({navigation, route}) => {
         Apellidos:
       </Text>
       <TextInput style={styles.input}
-        placeholder='HTA'
+        placeholder='APELLIDOS'
         editable = {false}
         value={usuarios.apellidos}/>
 
@@ -81,7 +91,7 @@ const ViewUser = ({navigation, route}) => {
         Teléfono:
       </Text>
         <TextInput style={styles.input}
-          placeholder='DM'
+          placeholder='TELÉFONO'
           editable = {false}
           value={usuarios.telefono}/>
 
@@ -89,7 +99,7 @@ const ViewUser = ({navigation, route}) => {
         Contraseña:
       </Text>
         <TextInput style={styles.input}
-        placeholder='DM'
+        placeholder='CONTRASEÑA'
         editable = {false}
         value={usuarios.contraseña}/>
 
@@ -97,7 +107,7 @@ const ViewUser = ({navigation, route}) => {
         ROL:
       </Text>
         <TextInput style={styles.input}
-        placeholder='GGT'
+        placeholder='ROL'
         editable = {false}
         value={usuarios.rol}/>
 
@@ -107,7 +117,13 @@ const ViewUser = ({navigation, route}) => {
         <TouchableOpacity style={styles.ButtonSave} onPress={handleVolver}>
         <AntDesign name="back" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Volver</Text>
         </TouchableOpacity> 
+        
       </Row>
+      <Button
+  onPress={handleEditar}
+  title="Editar"
+  color="#fc9303"
+/>
     </View>
   )
 }

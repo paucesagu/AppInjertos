@@ -9,6 +9,7 @@ import RNPickerSelect from "react-native-picker-select";
 import Container from 'react-bootstrap/Container';
 import { Feather } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native'
+import swal from 'sweetalert'
 
 
 
@@ -16,24 +17,25 @@ const UpdateInjertos = ({navigation, route}) => {
   
 //Estados
 const [injertos,setInjertos]= useState({
-  "edad":"",
-  "sexo":"", 
-  "imc":"",
-  "hta":"True",
-  "dm":"True",
-  "dlp":"True",
-  "apm":"True",
-  "apq":"True",
-  "got":"",
-  "gpt":"",
-  "ggt":"",
-  "na":"",
-  "bbt":"",
-  "acvhc":"True",
-  "acvhbc":"True",
-  "aminas":"True",
-  "dosisna":"",
-  "ecografia":"Normal",
+  edad:"",
+  sexo:"", 
+  imc:"",
+  hta:"",
+  dm:"",
+  dlp:"",
+  apm:"",
+  apq:"",
+  got:"",
+  gpt:"",
+  ggt:"",
+  na:"",
+  bbt:"",
+  acvhc:"",
+  acvhbc:"",
+  aminas:"",
+  dosisna:"",
+  ecografia:"",
+  acierto:""
 
 });
 const placeholderSexo = {
@@ -49,72 +51,185 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
 
 
-  useEffect(()=>{
-    if(route.params && route.params.id){  
-      ( async () => {
-        const injertos = await getInjerto(route.params.id)
-        console.log(injertos)
-        setInjertos({
-          edad: injertos.edad,
-          sexo: injertos.sexo,
-          imc: injertos.imc,
-          hta: injertos.hta,
-          dm: injertos.dm,
-          dlp: injertos.dlp,
-          apm: injertos.apm,
-          apq: injertos.apq,
-          got: injertos.got,
-          gpt: injertos.gpt,
-          ggt: injertos.ggt,
-          na: injertos.na,
-          bbt: injertos.bbt,
-          acvhc: injertos.acvhc,
-          acvhbc: injertos.acvhbc,
-          aminas: injertos.aminas, 
-          dosisna: injertos.dosisna,
-          ecografia: injertos.ecografia,
-        })
-        
-      })();
-    }
-  }, []);
-  const handleChange= (name, value) => setInjertos({...injertos, [name]:value,})
-
-
-  const handleSubmit = async () =>{
-    try {
-    injertos.sexo=value.value
-    
-    const result = await editarInjerto(route.params.id,injertos)
-      
-      if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
-        navigation.navigate('HomeScreenUsuario');
-      }else if(result.includes("Exito") && localStorage.getItem("rol")=="administrador"){
-        navigation.navigate('HomeScreen');
+useEffect(()=>{
+  if(route.params && route.params.id){  
+    ( async () => {
+      const result = await getInjerto(route.params.id)
+      var mensaje = result.message;
+      var injertos = result.injerto;
+      if(mensaje.includes("Exito")){
+            
+      if(injertos.hta == "Si"){
+        var hta = "True"
       }
       else{
-        alert(result);
+        var hta = "False"
+      }
+      if(injertos.dm == "Si"){
+        var dm = "True"
+      }
+      else{
+        var dm = "False"
+      }
+      if(injertos.dlp == "Si"){
+        var dlp = "True"
+      }
+      else{
+        var dlp = "False"
+      }
+      if(injertos.apm == "Si"){
+        var apm = "True"
+      }
+      else{
+        var apm = "False"
+      }
+      if(injertos.apq == "Si"){
+        var apq = "True"
+      }
+      else{
+        var apq = "False"
+      }
+      if(injertos.acvhc == "Si"){
+        var acvhc = "True"
+      }
+      else{
+        var acvhc = "False"
+      }
+      if(injertos.acvhbc == "Si"){
+        var acvhbc = "True"
+      }
+      else{
+        var acvhbc = "False"
+      }
+      if(injertos.aminas == "Si"){
+        var aminas = "True"
+      }
+      else{
+        var aminas = "False"
+      }
+      if(injertos.ecografia == "Normal"){
+        var ecografia = "Normal"
+      }
+      else if(injertos.ecografia == "Patológica"){
+        var ecografia = "Patológica"
+      }
+      else{
+        var ecografia = "No realizada"
+      }
+      setInjertos({
+        edad: injertos.edad,
+        sexo: injertos.sexo,
+        imc: injertos.imc,
+        hta: hta,
+        dm: dm,
+        dlp: dlp,
+        apm: apm,
+        apq: apq,
+        got: injertos.got,
+        gpt: injertos.gpt,
+        ggt: injertos.ggt,
+        na: injertos.na,
+        bbt: injertos.bbt,
+        acvhc: acvhc,
+        acvhbc: acvhbc,
+        aminas: aminas, 
+        dosisna: injertos.dosisna,
+        ecografia: ecografia,
+        acierto: injertos.acierto
+      })}
+      else{
+        swal("Ha habido un error", mensaje, "error");
       }
       
-    } catch (error) {
-      console.log(error);
+    })();
+  }
+}, []);
+const handleChange= (name, value) => setInjertos({...injertos, [name]:value,})
+
+
+const handleSubmit = async () =>{
+  try {
+  injertos.sexo=value.value
+  
+  console.log(injertos)
+  const result = await editarInjerto(route.params.id,injertos)
+    
+    if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
+      swal("Enhorabuena", result, "success");
+      navigation.navigate('HomeScreenUsuario');
+    }else if(result.includes("Exito") && localStorage.getItem("rol")=="administrador"){
+      swal("Enhorabuena", result, "success");
+      navigation.navigate('HomeScreen');
+    }
+    else{
+      swal("Ha habido un error", result, "error");
     }
     
-    }
+  } catch (error) {
+    console.log(error);
+  }
+  
+  }
 
-    const getValue = () => {
- 
-      let color;
-      var valor=injertos.hta;
-      if(valor == 0){
-        color ="0"        
-      }
-      else {
-        color="1"
-      }
-      console.log(color)
-      return color
-    }
+
+ if(injertos.hta == "True"){
+  var valorhta = "Si"
+}
+else{
+  var valorhta = "No"
+}
+if(injertos.dm == "True"){
+  var valordm = "Si"
+}
+else{
+  var valordm = "No"
+}
+if(injertos.dlp == "True"){
+  var valordlp = "Si"
+}
+else{
+  var valordlp = "No"
+}
+if(injertos.apm == "True"){
+  var valorapm = "Si"
+}
+else{
+  var valorapm = "No"
+}
+if(injertos.apq == "True"){
+  var valorapq = "Si"
+}
+else{
+  var valorapq = "No"
+}
+if(injertos.acvhc == "True"){
+  var valoracvhc = "Si"
+}
+else{
+  var valoracvhc = "No"
+}
+if(injertos.acvhbc == "True"){
+  var valoracvhbc = "Si"
+}
+else{
+  var valoracvhbc = "No"
+}
+if(injertos.aminas == "True"){
+  var valoraminas = "Si"
+}
+else{
+  var valoraminas = "No"
+}
+if(injertos.acierto == "True"){
+  var valoracierto = "Si"
+}
+else{
+  var valoracierto = "No"
+}
+
+
+  
+  
 
   
 
@@ -138,30 +253,31 @@ const handleChangeSexo= (value) => {setSexo({value})}
   <Col md={6} style={{display:'grid'}}>
   <View>
   <Text style={styles.texto}>
-    Edad: {injertos.edad}
+    Edad: 
   </Text>
     <TextInput style={styles.input}
       placeholder='Edad'
       onChangeText={text => handleChange('edad', text)}
-      /*value={injertos.edad}*//>
+      value={injertos.edad}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    IMC: {injertos.imc}
+    IMC:
   </Text>
   <TextInput style={styles.input}
     placeholder='IMC'
     onChangeText={text => handleChange('imc', text)}
-   /* value={injertos.imc}*//>
+   value={injertos.imc}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    HTA: {injertos.hta}
+    HTA: {valorhta}
   </Text>
+  
   <SwitchSelector
-                initial={0 }
+                initial={0}
                 onPress={(value) => handleChange('hta', value)}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
@@ -178,8 +294,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    DM: {injertos.dm}
+    DM: {valordm}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('dm', value)}
@@ -199,42 +316,42 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    GPT: {injertos.gpt}
+    GPT: 
   </Text>
     <TextInput style={styles.input}
     placeholder='GPT'
     onChangeText={text => handleChange('gpt', text)}
-    /*value={injertos.gpt}*//>
+    value={injertos.gpt}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    GGT: {injertos.ggt}
+    GGT: 
   </Text>
     <TextInput style={styles.input}
     placeholder='GGT'
     onChangeText={text => handleChange('ggt', text)}
-    /*value={injertos.ggt}*//>
+    value={injertos.ggt}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    NA: {injertos.na}
+    NA: 
   </Text>
     <TextInput style={styles.input}
     placeholder='NA'
     onChangeText={text => handleChange('na', text)}
-    /*value={injertos.na}*//>
+    value={injertos.na}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    BBT: {injertos.bbt}
+    BBT:
   </Text>
     <TextInput style={styles.input}
     placeholder='BBT'
     onChangeText={text => handleChange('bbt', text)}
-    /*value={injertos.bbt}*//>
+    value={injertos.bbt}/>
   </View>
   </Col>
   
@@ -266,8 +383,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
   </View>
   <View>
   <Text style={styles.texto}>
-    DLP: {injertos.dlp}
+    DLP: {valordlp}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('dlp', value)}
@@ -287,8 +405,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    APM: {injertos.apm}
+    APM: {valorapm}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('apm', value)}
@@ -307,8 +426,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    APQ: {injertos.apq}
+    APQ: {valorapq}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('apq', value)}
@@ -328,18 +448,19 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    GOT: {injertos.got}
+    GOT:
   </Text>
     <TextInput style={styles.input}
       placeholder='GOT'
       onChangeText={text => handleChange('got', text)}
-      /*value={injertos.got}*//>
+      value={injertos.got}/>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    ACVHC: {injertos.acvhc}
+    ACVHC: {valoracvhc}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('acvhc', value)}
@@ -358,8 +479,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    ACVHBC: {injertos.acvhbc}
+    ACVHBC: {valoracvhbc}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('acvhbc', value)}
@@ -378,8 +500,9 @@ const handleChangeSexo= (value) => {setSexo({value})}
 
   <View>
   <Text style={styles.texto}>
-    AMINAS: {injertos.aminas}
+    AMINAS: {valoraminas}
   </Text>
+  
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('aminas', value)}
@@ -405,12 +528,12 @@ const handleChangeSexo= (value) => {setSexo({value})}
   <Col>
  <View>
   <Text style={styles.texto}>
-    DOSIS: {injertos.dosis}
+    DOSIS: 
   </Text>
     <TextInput style={styles.input}
     placeholder='DOSIS'
     onChangeText={text => handleChange('dosisna', text)}
-    /*value={injertos.dosisna}*//>
+    value={injertos.dosisna}/>
   </View>
 
   <View>
@@ -434,6 +557,27 @@ const handleChangeSexo= (value) => {setSexo({value})}
                   testID="gender-switch-selector"
                   accessibilityLabel="gender-switch-selector"/>
   </View>
+  <View>
+  <Text style={styles.texto}>
+    ACIERTO: {valoracierto}
+  </Text>
+  
+  <SwitchSelector
+                initial={0}
+                onPress={(value) => handleChange('acierto', value)}
+                textColor='#7a44cf'
+                selectedColor='#FFFFFF'
+                buttonColor='#9af88c'
+                borderColor='#9af88c'
+                hasPadding
+                options={[
+                  { label: "Sí", value: "True" },
+                  { label: "No", value: "False" },
+                ]}
+                  testID="gender-switch-selector"
+                  accessibilityLabel="gender-switch-selector"/>
+  </View>
+
         
         <Row>
           <View>

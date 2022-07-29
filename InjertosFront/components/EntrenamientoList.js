@@ -1,4 +1,5 @@
 import { FlatList, RefreshControl } from 'react-native'
+import swal from 'sweetalert'
 import React , {useState, useEffect} from 'react'
 import {getReentrenamientos} from '../api';
 import EntrenamientoItem from './EntrenamientoItem'
@@ -8,10 +9,18 @@ const EntrenamientoList = () => {
   const [refreshing,setRefreshing] = useState(false)
 
   const loadEntrenamientos = async () =>{
-      const data = await getReentrenamientos();
+    const result = await getReentrenamientos();
+    console.log(result);
+    var mensaje = result.message;
+    var data = result.arrayReentreno;
+    if(mensaje.includes("Exito")){
       setEntrenamiento(data);
+    }
+    else{
+      swal("Ha habido un error", mensaje, "error");
+    }
   }
-
+console.log(entrenamientos);
 
   useEffect(() => {    
     loadEntrenamientos()
@@ -31,6 +40,7 @@ const EntrenamientoList = () => {
     <FlatList
     style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}
             data={entrenamientos}
+            numColumns = {3}
             keyExtractor={(item) => item.id +''}
             renderItem = {renderItem}
             refreshControl={

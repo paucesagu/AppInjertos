@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import {useNavigation} from '@react-navigation/native'
-import {reentrenar} from '../api'
 
 const EntrenamientoItem = ({entrenamientos}) => {
 
@@ -12,7 +11,7 @@ const EntrenamientoItem = ({entrenamientos}) => {
           <View style={styles.container}>
             <TouchableOpacity style={{paddingRight:30}}>
               <View style={{flexDirection: 'row',display: 'block'}}>
-                <Text style={{fontWeight: 'bold'}}>Instancia: </Text>
+                <Text style={{fontWeight: 'bold'}}>Último injerto valorado: </Text>
                 <Text style={{fontWeight: 'bold'}}> {entrenamientos.ultima_instancia}</Text>
               </View>
               <View style={{flexDirection: 'row',display: 'block'}}>
@@ -26,6 +25,10 @@ const EntrenamientoItem = ({entrenamientos}) => {
               <View style={{flexDirection: 'row',display: 'block'}}>
                 <Text>AUC: </Text>
                 <Text>{entrenamientos.auc}</Text>
+              </View>
+              <View style={{flexDirection: 'row',display: 'block'}}>
+                <Text>ACC: </Text>
+                <Text>{entrenamientos.acc}</Text>
               </View>
               
             

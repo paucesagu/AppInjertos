@@ -1,16 +1,18 @@
-import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, Button } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import { getInjerto } from "../api"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AntDesign } from '@expo/vector-icons';
 import {predecir} from "../api"
+import swal from 'sweetalert'
 
 
 const ViewInjertos = ({navigation, route}) => {
   //console.log(localStorage.getItem('rol'));
   //Estados
 const [injertos,setInjertos]= useState({
+  id: "",
   edad:"",
   sexo:"", 
   imc:"",
@@ -40,9 +42,15 @@ const [injertos,setInjertos]= useState({
   useEffect(()=>{
     if(route.params && route.params.id){  
       ( async () => {
-        const injertos = await getInjerto(route.params.id)
+        const result = await getInjerto(route.params.id)
+      var mensaje = result.message;
+      var injertos = result.injerto;
+      if(mensaje.includes("Exito")){
+       
+      
         console.log(injertos)
         setInjertos({
+          id: injertos.id,
           edad: injertos.edad,
           sexo: injertos.sexo,
           imc: injertos.imc,
@@ -69,7 +77,10 @@ const [injertos,setInjertos]= useState({
        
         
         
-      })();
+      }
+      else{
+        swal("Ha habido un error", mensaje, "error");
+      }})();
     }
   }, []);
   
@@ -82,12 +93,34 @@ const [injertos,setInjertos]= useState({
     }
   }
 
+  const handleEditar = () => {
+    
+    navigation.navigate('UpdateInjertos', {id: injertos.id})
+    }
+  
+
   const handleSubmit = async () => {
-    const prediccion = await predecir(route.params.id)
-    if(localStorage.getItem("rol")=="usuario" ){
+    const result2 = await predecir(route.params.id)
+      var mensaje = result2.message;
+      var prediccion = result2.solucion;
+      var clasificacion = prediccion.clasificacion;
+      clasificacion = clasificacion.toUpperCase();
+      var probabilidad = prediccion.probabilidad;
+      probabilidad = String(probabilidad*100) + "%"
+      mensajeCla = "El injerto es: " + clasificacion + " con una probabilidad de: " + probabilidad
+    
+
+
+      
+    if(mensaje.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
+      swal("Ehorabuena", mensajeCla, "success");
       navigation.navigate('HomeScreenUsuario');
-    }else if(localStorage.getItem("rol")=="administrador"){
+    }else if( mensaje.includes("Exito") && localStorage.getItem("rol")=="administrador"){
+      swal("Ehorabuena", mensajeCla, "success");
       navigation.navigate('HomeScreen');
+    }
+    else{
+      swal("Ha habido un error", mensaje, "error");
     }
    
   }
@@ -187,7 +220,23 @@ const [injertos,setInjertos]= useState({
           placeholder='DLP'
           editable = {false}
           value={injertos.dlp}/>
-
+<Text style={styles.texto}>
+        Válido:
+      </Text>
+        <TextInput style={{backgroundColor:getBackgroundColor(injertos.valido), width:'100%',
+        fontSize:15,
+        marginBottom:7,
+        borderWidth: 1,
+        borderColor:'#9af88c',
+        height:30,
+        textAlign: 'center',
+        padding: 4,
+        borderRadius:5,
+        flex: 1,
+        color: 'white'}}
+          placeholder='Válido'
+          editable = {false}
+          value={injertos.valido}/>
       </Col>
       
     
@@ -256,15 +305,28 @@ const [injertos,setInjertos]= useState({
           placeholder='DOSIS'
           editable = {false}
           value={injertos.dosisna}/>
-
+<Text style={styles.texto}>
+        Ecografía:
+      </Text>
+        <TextInput style={styles.input}
+          placeholder='ECOGRAFÍA'
+          editable = {false}
+          value={injertos.ecografia}/>
          <Text style={styles.texto}>
         Fecha:
       </Text>
         <TextInput style={styles.input}
-          placeholder='DOSIS'
+          placeholder='FECHA'
           editable = {false}
           value={injertos.fecha}/>
           
+          <Text style={styles.texto}>
+        Probabilidad:
+      </Text>
+        <TextInput style={styles.input}
+          placeholder='Probabilidad'
+          editable = {false}
+          value={injertos.probabilidad}/>
         
 
     </Col>
@@ -278,34 +340,16 @@ const [injertos,setInjertos]= useState({
           placeholder='Acierto'
           editable = {false}
           value={injertos.acierto}/> 
-      <Text style={styles.texto}>
-        Válido:
-      </Text>
-        <TextInput style={{backgroundColor:getBackgroundColor(injertos.valido), width:'100%',
-        fontSize:15,
-        marginBottom:7,
-        borderWidth: 1,
-        borderColor:'#9af88c',
-        height:30,
-        textAlign: 'center',
-        padding: 4,
-        borderRadius:5,
-        flex: 1,
-        color: 'white'}}
-          placeholder='Válido'
-          editable = {false}
-          value={injertos.valido}/>
-        <Text style={styles.texto}>
-        Probabilidad:
-      </Text>
-        <TextInput style={styles.input}
-          placeholder='Probabilidad'
-          editable = {false}
-          value={injertos.probabilidad}/>
-
+      
       <TouchableOpacity style={styles.ButtonSave} onPress={handleVolver}>
       <AntDesign name="back" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Volver</Text>
       </TouchableOpacity>   
+      <Button
+  onPress={handleEditar}
+  title="Editar"
+  color="#fc9303"
+/>
+      
     </Col>
     </Row>
     </View>

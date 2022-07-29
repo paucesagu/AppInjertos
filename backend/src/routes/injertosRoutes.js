@@ -5,6 +5,7 @@ const { verifyToken } = require('../middlewares/verifyToken');
 
 router.use(verifyToken)
 router.get('/injertos', injertosController.getInjertos);
+router.get('/injertosNoValorados', injertosController.injertosNoValorados);
 router.post('/injertos', injertosController.addInjerto);
 router.get('/injertos/:id', injertosController.getInjerto); 
 router.put('/injertos/:id', injertosController.editInjerto);

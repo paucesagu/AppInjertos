@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import RNPickerSelect from "react-native-picker-select";
 import {useNavigation} from '@react-navigation/native'
 import { FontAwesome5 } from '@expo/vector-icons';
+import swal from 'sweetalert'
 
 const UpdateUsers = ({navigation, route}) => {
 
@@ -35,18 +36,26 @@ const UpdateUsers = ({navigation, route}) => {
     useEffect(()=>{
         if(route.params && route.params.dni){  
           ( async () => {
-            
-            const usuario = await getUser(route.params.dni)
-            setUsers({
-              dni: usuario.dni,
-              nombre: usuario.nombre,
-              apellidos: usuario.apellidos,
-              telefono: usuario.telefono,
-              email: usuario.email,
-              contraseña: usuario.contraseña,
-              rol: usuario.rol,
-            
-            })        
+            const result = await getUser(route.params.dni)
+            var mensaje = result.message;
+      var usuario = result.result2;
+      if(mensaje.includes("Exito")){
+    
+      setUsers({
+        dni: usuario.dni,
+        nombre: usuario.nombre,
+        apellidos: usuario.apellidos,
+        telefono: usuario.telefono,
+        email: usuario.email,
+        contraseña: usuario.contraseña,
+        rol: usuario.rol,
+      
+      })     
+    }
+    else{
+      swal("Ha habido un error", mensaje, "error");
+    }
+               
           })();
         }
       }, []);
@@ -63,10 +72,11 @@ const UpdateUsers = ({navigation, route}) => {
       const resultado = await editarUsuario(route.params.dni,usuarios)
       console.log(resultado)
       if(resultado.includes("Exito")){
+        swal("Enhorabuena", resultado, "success");
         await navigation.navigate('ListadoUsers')
         }
         else{
-          alert(resultado);
+          swal("Ha habido un error", resultado, "error");
         }
       
      

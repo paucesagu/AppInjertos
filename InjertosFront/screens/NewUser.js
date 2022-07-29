@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import RNPickerSelect from "react-native-picker-select";
 import { AntDesign  } from '@expo/vector-icons';
+import swal from 'sweetalert'
 
 const NewUser = ({navigation, route}) => {
 
@@ -46,10 +47,11 @@ const NewUser = ({navigation, route}) => {
     const resultado = await crearUsuario(usuarios)
     console.log(resultado)
     if(resultado.includes("Exito")){
-      await navigation.navigate('ListadoUsers')
+      swal("Enhorabuena", resultado, "success");
+      navigation.navigate('ListadoUsers')
       }
       else{
-        alert(resultado);
+        swal("Ha habido un error", resultado, "error");
       }
     
    

@@ -68,7 +68,7 @@ controller.reentrenar = async (req, res) => {
             [numInstancias, fecha, auc, ultInstancia, usuario, tiempo, acc]);   
             
               
-            res.status(200).json(solucion);
+            res.status(200).json({message: "Exito, se ha reentrenado correctamente", solucion});
             
             
             
@@ -119,8 +119,32 @@ controller.getReentrenamientos = async (req, res) => {
   try {
     var connection = await getConnection();
     const result = await connection.query('SELECT * FROM reentrenamientos order by fecha desc');
-    
-        res.status(200).json(result);
+    var string=JSON.stringify(result);
+    var json =  JSON.parse(string);
+    console.log(json);
+    var reentreno = {};
+    var arrayReentreno = [];
+    for(var i of json){
+      reentreno.ultima_instancia = i.ultima_instancia;
+      reentreno.numero_instancias = i.numero_instancias;
+      var fecha = i.fecha;
+      let firstArray = fecha.split("T");
+
+      let dma = firstArray[0].split('-');
+      let fmt = dma[2] + '/' + dma[1] + '/' + dma[0];
+
+      let hms = firstArray[1].split(":");
+      let hm = hms[0] + ":" + hms[1];
+      fecha = fmt + " " + hm;
+      reentreno.fecha = fecha;
+      reentreno.auc = i.auc;
+      reentreno.acc = i.acc;
+      var tiempo = String(i.tiempo);
+      reentreno.tiempo = tiempo + "segundos"
+      arrayReentreno.push({...reentreno});
+
+    }
+    res.status(200).json({message: "Exito. se han conseguido correctamente", arrayReentreno});
       
     
 } catch (error) {

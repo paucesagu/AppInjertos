@@ -16,7 +16,7 @@ controller.getUsuarios = async (req, res) => {
         var connection = await getConnection();
         const result = await connection.query('SELECT * FROM usuarios');
         
-            res.status(200).json(result);
+        res.status(200).json({message: "Exito, se han conseguido correctamente", result});
           
         
     } catch (error) {
@@ -32,17 +32,9 @@ controller.getUsuarios = async (req, res) => {
     try {
         var connection = await getConnection();
         const result = await connection.query('SELECT * FROM usuarios where dni = ?', req.params.dni.toUpperCase());
-        var string=JSON.stringify(result);
-        var json =  JSON.parse(string);
-        var usuarios = {};
-        usuarios.dni=json[0].dni
-        usuarios.nombre=json[0].nombre
-        usuarios.apellidos=json[0].apellidos
-        usuarios.telefono=json[0].telefono
-        usuarios.email=json[0].email
-        usuarios.contraseña=json[0].contraseña
-        usuarios.rol=json[0].rol
-        res.send(usuarios);
+        var result2 = result[0];
+        
+        res.status(200).json({message: "Exito, se ha conseguido correctamente", result2});
          
           
     } catch (error) {
@@ -64,7 +56,7 @@ controller.getUsuarios = async (req, res) => {
       var rol= req.body.rol;
      
       console.log("Entra en las valoraciones");
-      if(dni == null || contraseña == null || email == null || telefono == null || nombre == null){
+      if(dni == "" || contraseña == "" || email == "" || telefono == "" || nombre == ""){
         
        
           res.status(400).json({ message: "Los campos no pueden ser nulos" });
@@ -138,7 +130,7 @@ controller.getUsuarios = async (req, res) => {
       var rol= req.body.rol;
      
       console.log("Entra en las valoraciones");
-      if(dni == null || contraseña == null || email == null || telefono == null || nombre == null){
+      if(dni == "" || contraseña == "" || email == "" || telefono == "" || nombre == ""){
         
        
           res.status(400).json({ message: "Los campos no pueden ser nulos" });
@@ -186,7 +178,7 @@ controller.getUsuarios = async (req, res) => {
       
     }
 };
-
+/*
 controller.modificarContraseña = async (req, res) => {
   try {
     var dni = req.params.dni.toUpperCase();
@@ -206,8 +198,7 @@ controller.modificarContraseña = async (req, res) => {
       connection.query('SELECT * FROM usuarios WHERE dni = ?;', dni, (err, result) => {
         if(err){
           
-            res.status(400);
-            res.send(err);
+          res.status(400).json({ message: "Usuario no encontrado" });
             
         }
         bcrypt.compare(contraseñaAntigua, result[0].contraseña, (error, response) => {
@@ -256,7 +247,7 @@ controller.modificarContraseña = async (req, res) => {
     
   }
 };
-
+*/
 controller.deleteUsuario = async (req, res) => {
   const connection = await getConnection();
   const result = await connection.query("DELETE FROM usuarios WHERE dni = ?", [
