@@ -16,24 +16,24 @@ const UpdateInjertos = ({navigation, route}) => {
   
 //Estados
 const [injertos,setInjertos]= useState({
-  edad:"",
-  sexo:"", 
-  imc:"",
-  hta:"",
-  dm:"",
-  dlp:"",
-  apm:"",
-  apq:"",
-  got:"",
-  gpt:"",
-  ggt:"",
-  na:"",
-  bbt:"",
-  acvhc:"",
-  acvhbc:"",
-  aminas:"",
-  dosisna:"",
-  ecografia:""
+  "edad":"",
+  "sexo":"", 
+  "imc":"",
+  "hta":"True",
+  "dm":"True",
+  "dlp":"True",
+  "apm":"True",
+  "apq":"True",
+  "got":"",
+  "gpt":"",
+  "ggt":"",
+  "na":"",
+  "bbt":"",
+  "acvhc":"True",
+  "acvhbc":"True",
+  "aminas":"True",
+  "dosisna":"",
+  "ecografia":"Normal",
 
 });
 const placeholderSexo = {
@@ -46,20 +46,8 @@ const [value, setSexo] = useState({
 });
 const handleChangeSexo= (value) => {setSexo({value})}
 
-const placeholderEco = {
-  label: 'Tipo de Ecografía...',
-  value: "",
-  color: '#9EA0A4',
-};
-
-const [valueEco, setEcografia] = useState({
-  valueEco:""
-});
 
 
-const handleChangeEcografia= (valueEco) => {
-  setEcografia({valueEco})
-} 
 
   useEffect(()=>{
     if(route.params && route.params.id){  
@@ -96,7 +84,7 @@ const handleChangeEcografia= (valueEco) => {
   const handleSubmit = async () =>{
     try {
     injertos.sexo=value.value
-    injertos.ecografia=valueEco.valueEco
+    
     const result = await editarInjerto(route.params.id,injertos)
       
       if(result.includes("Exito") && localStorage.getItem("rol")=="usuario" ){
@@ -117,17 +105,18 @@ const handleChangeEcografia= (valueEco) => {
     const getValue = () => {
  
       let color;
-      if(injertos.hta == "No"){
-        color =0
+      var valor=injertos.hta;
+      if(valor == 0){
+        color ="0"        
       }
       else {
-        color=1
+        color="1"
       }
       console.log(color)
       return color
     }
 
-    console.log(getValue())
+  
 
   return (
     
@@ -149,31 +138,30 @@ const handleChangeEcografia= (valueEco) => {
   <Col md={6} style={{display:'grid'}}>
   <View>
   <Text style={styles.texto}>
-    Edad:
+    Edad: {injertos.edad}
   </Text>
     <TextInput style={styles.input}
       placeholder='Edad'
       onChangeText={text => handleChange('edad', text)}
-      value={injertos.edad}/>
+      /*value={injertos.edad}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    IMC:
+    IMC: {injertos.imc}
   </Text>
   <TextInput style={styles.input}
     placeholder='IMC'
     onChangeText={text => handleChange('imc', text)}
-    value={injertos.imc}
-    />
+   /* value={injertos.imc}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    HTA:
+    HTA: {injertos.hta}
   </Text>
   <SwitchSelector
-                initial={getValue(injertos.hta)}
+                initial={0 }
                 onPress={(value) => handleChange('hta', value)}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
@@ -190,10 +178,10 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    DM:
+    DM: {injertos.dm}
   </Text>
   <SwitchSelector
-                initial={1}
+                initial={0}
                 onPress={(value) => handleChange('dm', value)}
 
                 textColor='#7a44cf'
@@ -211,46 +199,42 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    GPT:
+    GPT: {injertos.gpt}
   </Text>
     <TextInput style={styles.input}
     placeholder='GPT'
     onChangeText={text => handleChange('gpt', text)}
-    value={injertos.gpt}
-    />
+    /*value={injertos.gpt}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    GGT:
+    GGT: {injertos.ggt}
   </Text>
     <TextInput style={styles.input}
     placeholder='GGT'
     onChangeText={text => handleChange('ggt', text)}
-    value={injertos.ggt}
-    />
+    /*value={injertos.ggt}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    NA:
+    NA: {injertos.na}
   </Text>
     <TextInput style={styles.input}
     placeholder='NA'
     onChangeText={text => handleChange('na', text)}
-    value={injertos.na}
-    />
+    /*value={injertos.na}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    BBT:
+    BBT: {injertos.bbt}
   </Text>
     <TextInput style={styles.input}
     placeholder='BBT'
     onChangeText={text => handleChange('bbt', text)}
-    value={injertos.bbt}
-    />
+    /*value={injertos.bbt}*//>
   </View>
   </Col>
   
@@ -258,7 +242,7 @@ const handleChangeEcografia= (valueEco) => {
 <Col md={6} style={{display:'grid', marginLeft:10}}>
    <View>
     <Text style={{fontWeight: 'bold'}}>
-      Género:
+      Género: {injertos.sexo}
     </Text>
       <RNPickerSelect
         placeholder={placeholderSexo}
@@ -282,12 +266,11 @@ const handleChangeEcografia= (valueEco) => {
   </View>
   <View>
   <Text style={styles.texto}>
-    DLP:
+    DLP: {injertos.dlp}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('dlp', value)}
-                value={injertos.dlp}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -304,12 +287,11 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    APM:
+    APM: {injertos.apm}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('apm', value)}
-                value={injertos.apm}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -325,12 +307,12 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    APQ:
+    APQ: {injertos.apq}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('apq', value)}
-                value={injertos.apq}
+               
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -346,23 +328,21 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    GOT:
+    GOT: {injertos.got}
   </Text>
     <TextInput style={styles.input}
       placeholder='GOT'
       onChangeText={text => handleChange('got', text)}
-      value={injertos.got}
-      />
+      /*value={injertos.got}*//>
   </View>
 
   <View>
   <Text style={styles.texto}>
-    ACVHC:
+    ACVHC: {injertos.acvhc}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('acvhc', value)}
-                value={injertos.acvhc}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -378,12 +358,11 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    ACVHBC:
+    ACVHBC: {injertos.acvhbc}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('acvhbc', value)}
-                value={injertos.acvhbc}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -399,12 +378,11 @@ const handleChangeEcografia= (valueEco) => {
 
   <View>
   <Text style={styles.texto}>
-    AMINAS:
+    AMINAS: {injertos.aminas}
   </Text>
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('aminas', value)}
-
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -427,24 +405,22 @@ const handleChangeEcografia= (valueEco) => {
   <Col>
  <View>
   <Text style={styles.texto}>
-    DOSIS:
+    DOSIS: {injertos.dosis}
   </Text>
     <TextInput style={styles.input}
     placeholder='DOSIS'
     onChangeText={text => handleChange('dosisna', text)}
-    value={injertos.dosisna}
-    />
+    /*value={injertos.dosisna}*//>
   </View>
 
   <View>
   <Text style={{fontWeight: 'bold'}}>
-    Ecografía:
+    Ecografía: {injertos.ecografia}
   </Text>
 
   <SwitchSelector
                 initial={0}
                 onPress={(value) => handleChange('ecografia', value)}
-                value={injertos.ecografia}
                 textColor='#7a44cf'
                 selectedColor='#FFFFFF'
                 buttonColor='#9af88c'
@@ -501,7 +477,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   ButtonSave: {
-    paddingTop:10,
+    paddingTop:20,
     paddingBottom:10,
     borderRadius:10,
     marginBottom:3,
