@@ -77,6 +77,7 @@ export const login = async (user) => {
   console.log(user);
   localStorage.removeItem('token');
   localStorage.removeItem('rol');
+  localStorage.removeItem('userDNI');
   await fetch('http://localhost:8000/login', {
       method: "POST",
       body: JSON.stringify(user),
@@ -92,6 +93,7 @@ export const login = async (user) => {
       }
       else{
         localStorage.setItem("token", data.token)
+        localStorage.setItem("userDNI", data.dni)
         res = data.message;
       }
     } )
@@ -100,6 +102,7 @@ export const login = async (user) => {
     localStorage.setItem("rol", rol);
     console.log(localStorage.getItem("token"));
     console.log(localStorage.getItem("rol"));
+    console.log(localStorage.getItem("userDNI"));
     return res;
   };
 
@@ -187,7 +190,7 @@ export const editarUsuario = async (usuarioId, newUser) => {
   console.log(res)
   return await res;
   };
-/*
+
   export const modificarContraseña = async (usuarioId, newPassword) => {
     console.log(usuarioId, newPassword)
     var res = "";
@@ -204,7 +207,7 @@ export const editarUsuario = async (usuarioId, newUser) => {
   })
   console.log(res)
   return await res;
-  };*/
+  };
 
   //reentrenar
 

@@ -148,7 +148,7 @@ else{
 if(injertos.acvhbc == "True"){
   var valoracvhbc = "Si"
 }
-else if(injertos.acvhbc= ""){
+else if(injertos.acvhbc== ""){
   var valoracvhbc = ""
 }
 else{
@@ -165,7 +165,7 @@ else{
 }
 
 
-
+console.log(injertos.acvhbc)
   
   
 

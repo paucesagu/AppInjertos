@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, TouchableOpacity} from 'react-native'
+import Row from 'react-bootstrap/Row';
 import { login } from "../api"
 import { AntDesign } from '@expo/vector-icons'
 import { TextField } from '@mui/material';
 import swal from 'sweetalert'
+import { Feather, FontAwesome5  } from '@expo/vector-icons';
 
 
 const LoginScreen = ({navigation}) => {
 
 
   const[body , setBody] = useState({dni: '', contraseña: ''})
+  const [shown, setShown] = useState(false);
+  const switchShown = () => setShown(!shown);
+  
 
   const inputChange = ({ target }) => {
     const { name , value} = target
@@ -60,13 +65,23 @@ const onSubmit = async () =>{
   
             <Text style={styles.nombre}> <strong>Introduzca Contraseña: </strong></Text>
   
-            <View style={styles.item}>
-                <AntDesign style={styles.imagen} name="lock" size={35} color="black" />
-                <TextField type='password' fullWidth value={body.contraseña} onChange={inputChange} name='contraseña' style={{obscureText:true, width:250, backgroundColor: 'white'}}  />
+            <View style={styles.item2}>
+            <Row style={{display:"flex"}}>
+                <AntDesign style={styles.imagen} name="lock" size={35} color="black" 
+                
+                />
+                <TextField type={shown ? 'text' : 'password'} fullWidth value={body.contraseña} onChange={inputChange} name='contraseña' style={{obscureText:true, width:250, backgroundColor: 'white'}}
+                  
+                />
+                  <TouchableOpacity style={styles.icon} onPress={switchShown}>
+     <FontAwesome5 name="eye" size={20} color="black" />
+     </TouchableOpacity>
+                  </Row>
+                
+                
 
             </View>
-            
-            <Button style={styles.iniciar} title='Iniciar Sesión' backgroundColor='red' onPress={onSubmit}/>
+              <Button style={styles.iniciar} title='Iniciar Sesión' backgroundColor='red' onPress={onSubmit}/>
   
           </View>
         </View>
@@ -87,6 +102,9 @@ const onSubmit = async () =>{
       padding: 5,
       paddingLeft: 10,
       marginTop: 5
+    },
+    iconPassword: {
+      color: "c1c1c1"
     },
     input: {
       borderWidth: 1,
@@ -112,6 +130,11 @@ const onSubmit = async () =>{
     },
     item: {
       flexDirection: 'row',
+      display: 'block',
+      marginRight: 40,
+    },
+    item2: {
+      flexDirection: 'row',
       display: 'block'
       /* padding: 16,
       marginTop: 16,
@@ -129,7 +152,8 @@ const onSubmit = async () =>{
   
     },
     iniciar: {
-      backgroundColor: 'red'
+      backgroundColor: 'red',
+      paddingTop: 10
     },
     header: {
       flexDirection: 'row',

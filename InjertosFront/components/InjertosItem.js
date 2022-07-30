@@ -32,6 +32,10 @@ const InjertosItem = ({injertos}) => {
             <Text style={{fontWeight: 'bold'}}> {injertos.id}</Text>
           </View>
           <View style={{flexDirection: 'row',display: 'block'}}>
+            <Text>Fecha: </Text>
+            <Text>{injertos.fecha} </Text>
+          </View>
+          <View style={{flexDirection: 'row',display: 'block'}}>
             <Text>Edad: </Text>
             <Text>{injertos.edad} </Text>
           </View>

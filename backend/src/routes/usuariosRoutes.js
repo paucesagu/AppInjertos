@@ -11,6 +11,7 @@ router.get('/usuarios/:dni', isTheSameUserOrAdmin, usuariosController.getUser);
 router.put('/usuarios/:dni', isTheSameUserOrAdmin, usuariosController.editUser);
 router.post('/usuarios', isAdmin, usuariosController.crearUsuario);
 router.delete("/usuarios/:dni",  isAdmin, usuariosController.deleteUsuario);
+router.put("/usuarios/:dni/password", isTheSameUserOrAdmin, usuariosController.modificarContraseña);
 /*
 router.get('/usuarios', usuariosController.getUsuarios);
 router.get('/usuarios/:dni', usuariosController.getUser);

@@ -40,16 +40,16 @@ const EntrenamientoItem = ({entrenamientos}) => {
 }
 const styles = StyleSheet.create({
     
-    item:{
-        backgroundColor:"#FFFFFF",
-        padding:20,
-        marginVertical:8,
-        borderRadius:5,
-        textAlign:"left",
-        borderWidth: 3,
-        borderColor:'#9af88c',
-        borderRadius:10,   
-    },
+  item:{
+    backgroundColor:"#FFFFFF",
+    width:"33%",
+    padding:10,
+    marginVertical:8,
+    textAlign:"left",
+    borderWidth: 3,
+    borderColor:'#9af88c',
+    borderRadius:10,   
+},
     container:{
       alignItems: 'left',
       justifyContent: 'left',

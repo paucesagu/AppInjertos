@@ -13,9 +13,10 @@ import NewUser from './screens/NewUser';
 import ViewUser from './screens/ViewUser';
 import MiPerfil from './screens/MiPerfil';
 import UpdateUsers from './screens/UpdateUsers';
+import UpdateContraseña from './screens/UpdateContraseña';
 import { logout } from "./api";
-import HomeScreenUsuario from './screens/HomeScreenUsuario';
 import HistorialEntrenamiento from './screens/HistorialEntrenamiento';
+import swal from 'sweetalert';
 
 
 const Stack = createStackNavigator();
@@ -23,6 +24,8 @@ const Stack = createStackNavigator();
 
 
 const App = ()=> {
+  var userDNI = localStorage.getItem('userDNI');
+  console.log(userDNI);
 
   const [disabled,setDisabled]=useState(false)
 
@@ -35,7 +38,7 @@ const App = ()=> {
         navigation.navigate("LoginScreen");
       }
       else{
-        alert(resultado);
+        swal("Ha habido un error", resultado, error);
       }
       
       
@@ -95,7 +98,7 @@ const App = ()=> {
             headerRight: () => (
               <TouchableOpacity style={{display:'block', marginLeft:3}}>
             
-                <AntDesign name="user" style={{marginRight:15}} size={34} color="black" onPress={() => navigation.navigate("MiPerfil")}/>
+                <AntDesign name="user" style={{marginRight:15}} size={34} color="black" onPress={() => navigation.navigate("MiPerfil",{dni: userDNI})} />
             
                 <AntDesign name="logout" size={28} color="black" onPress={onLogOut}/><Text style={{marginLeft:3,fontSize:'large', fontWeight:'bold'}}>Salir</Text>
             
@@ -106,7 +109,7 @@ const App = ()=> {
 
          <Stack.Screen 
             name="HomeScreenUsuario"
-            component = {HomeScreenUsuario} 
+            component = {HomeScreen} 
             options={ ({navigation}) => ({
               title:"Inicio",
               headerStyle: {backgroundColor: "#9af88c"},
@@ -123,7 +126,7 @@ const App = ()=> {
             headerRight: () => (
               <TouchableOpacity style={{display:'block', marginLeft:3}}>
                 
-              <AntDesign name="user" style={{marginRight:15}} size={34} color="black" onPress={() => navigation.navigate("MiPerfil")}/>
+                <AntDesign name="user" style={{marginRight:15}} size={34} color="black" onPress={() => navigation.navigate("MiPerfil",{dni: userDNI})} />
           
               <AntDesign name="logout" size={28} color="black" onPress={onLogOut}/><Text style={{marginLeft:3,fontSize:'large', fontWeight:'bold'}}>Salir</Text>
           
@@ -193,7 +196,7 @@ const App = ()=> {
         }}/> 
 
         <Stack.Screen name="ListadoUsers" 
-          title="Añadir Injertos"
+          
           component={ListadoUsers}
           options={ ({navigation}) => ({
             title:"Listado de Usuarios",
@@ -226,6 +229,18 @@ const App = ()=> {
         component={UpdateUsers}
         options={{
           title:'Modificar Usuario',
+          headerStyle:{backgroundColor: "#9af88c"},
+          headerTitleStyle:{
+            fontWeight:'bold'},
+          headerTitleAlign:'center',
+          headerTintColor: "black",
+        }}/>
+
+<Stack.Screen name="ModificarContraseña" 
+        title="Modificar Contraseña"
+        component={UpdateContraseña}
+        options={{
+          title:'Modificar Contraseña',
           headerStyle:{backgroundColor: "#9af88c"},
           headerTitleStyle:{
             fontWeight:'bold'},

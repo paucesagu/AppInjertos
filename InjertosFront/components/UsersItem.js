@@ -46,16 +46,16 @@ const UsersItem = ({usuarios}) => {
     }
     const styles = StyleSheet.create({
     
-        item:{
-          backgroundColor:"#FFFFFF",
-          width:"50%",
-          padding:10,
-          marginVertical:8,
-          textAlign:"left",
-          borderWidth: 3,
-          borderColor:'#9af88c',
-          borderRadius:10,  
-        },
+      item:{
+        backgroundColor:"#FFFFFF",
+        width:"33%",
+        padding:10,
+        marginVertical:8,
+        textAlign:"left",
+        borderWidth: 3,
+        borderColor:'#9af88c',
+        borderRadius:10,   
+    },
         container:{
           alignItems: 'left',
           justifyContent: 'left',

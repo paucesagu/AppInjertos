@@ -23,7 +23,7 @@ controller.login = async (req, res) => {
                   if (response) {
                     const token = jwt.sign({ id: dni }, config.SECRET, { expiresIn: 86400 }); //24h
                     //res.header("authorization",token).status(200).send(token);
-                    res.header("authorization",token).status(200).send({message: "Exito. usuario loggeado", "token": token});
+                    res.header("authorization",token).status(200).send({message: "Exito. usuario loggeado", "token": token, "dni": dni});
                    } else {
                     res.status(400).send({ message: "Usuario o contraseña incorrectos" });
                   }

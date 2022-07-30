@@ -47,23 +47,23 @@ const UsersList = () => {
         <EvilIcons name="refresh" size={24} color="black" />
         <Text styles={{fontWeight: 'bold'}}>Actualizar</Text>
         </TouchableOpacity>    
-      <View style={{ flex: 1, margin: 5, minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
-      <FlatList
-      style={{width:'100%', height:'100%',backgroundColor:'red', display:'contents'}}
-              data={usuarios}
-              numColumns = {3}
-            columnWrapperStyle={styles.row}
-              keyExtractor={(item) => item.id +''}
-              renderItem = {renderItem}
-              refreshControl={
-                <RefreshControl
-                colors={["#9af88c"]} 
-                onRefresh={onRefresh}
-                refreshing={refreshing}
-                progressBackgroundColor="#red"
-                />
-              }
-      />  
+        <View style={{ flex: 1, margin: 5 ,minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
+        <FlatList
+        style={{width:'100%', height:'100%', display:'contents'}}
+                data={usuarios}
+                numColumns = {3}
+                columnWrapperStyle={styles.row}
+                keyExtractor={(item) => item.id +''}
+                renderItem = {renderItem}
+                refreshControl={
+                  <RefreshControl
+                  colors={["#9af88c"]} 
+                  onRefresh={onRefresh}
+                  refreshing={refreshing}
+                  progressBackgroundColor="#red"
+                  />
+                }
+        />
       </View>
       </View>
     )

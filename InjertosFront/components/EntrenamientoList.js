@@ -46,26 +46,32 @@ console.log(entrenamientos);
         <EvilIcons name="refresh" size={24} color="black" />
         <Text styles={{fontWeight: 'bold'}}>Actualizar</Text>
       </TouchableOpacity>    
-      <View style={{ flex: 1, margin: 5, minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
-  
-    <FlatList
-    style={{width:'100%', height:'100%', display:'contents'}}
-            data={entrenamientos}
-            numColumns = {1}
-            keyExtractor={(item) => item.id +''}
-            renderItem = {renderItem}
-            refreshControl={
-              <RefreshControl
-              colors={["#9af88c"]} 
-              onRefresh={onRefresh}
-              refreshing={refreshing}
-              progressBackgroundColor="#red"
-              />
-            }
-    /> 
+      <View style={{ flex: 1, margin: 5 ,minWidth: {itemWidth}, maxWidth: {itemWidth}, height: 130}} >
+        <FlatList
+        style={{width:'100%', height:'100%', display:'contents'}}
+                data={entrenamientos}
+                numColumns = {3}
+                columnWrapperStyle={styles.row}
+                keyExtractor={(item) => item.id +''}
+                renderItem = {renderItem}
+                refreshControl={
+                  <RefreshControl
+                  colors={["#9af88c"]} 
+                  onRefresh={onRefresh}
+                  refreshing={refreshing}
+                  progressBackgroundColor="#red"
+                  />
+                }
+        />
      </View>
      </View>
   )
 }
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    justifyContent: "space-around"
+}
+});
 
 export default EntrenamientoList

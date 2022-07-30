@@ -1,14 +1,15 @@
 import React from "react";
 import UsersList from '../components/UsersList'
-import LayoutUsers from "../components/LayoutUsers";
+import Layout from "../components/Layout";
 
-const ListadoUsers = () => (
-  <LayoutUsers>
+const ListadoUsers = () => {
+  return(
+  <Layout>
         <UsersList/>
-    </LayoutUsers>
+    </Layout>
 
- 
+  )
   
-)
+  }
 
 export default ListadoUsers

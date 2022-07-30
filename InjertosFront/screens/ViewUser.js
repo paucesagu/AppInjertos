@@ -57,12 +57,33 @@ const ViewUser = ({navigation, route}) => {
     
         navigation.navigate('UpdateUsers', {dni: usuarios.dni})
         }
-      const handleEliminar = () => {
-
-          const result= deleteUsuario(usuarios.dni)
+      const handleEliminar = async () => {
+        swal("¿Quiere eliminar el usuario?", {
+          buttons: {
+            cancel: "No",
+            accept: "Si",
+          },
+        })
+        .then(async (value)  => {
+          switch (value) {
          
-    
+            case "accept":
+              const resultado= await deleteUsuario(usuarios.dni)
+              console.log(resultado)
+          if(resultado.includes("Exito")){
+            swal("Enhorabuena", resultado, "success");
+            }
+            else{
+              swal("Ha habido un error", resultado, "error");
+            }
           navigation.navigate('ListadoUsers')
+              break;
+         
+            default:
+              
+          }
+        });
+          
           }
     
 

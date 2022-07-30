@@ -1,6 +1,6 @@
 import React from 'react'
 import EntrenamientoList from '../components/EntrenamientoList'
-import LayoutEntrenamiento from "../components/LayoutEntrenamiento";
+import Layout from "../components/Layout";
 import { reentrenar } from '../api';
 import Row from 'react-bootstrap/Row';
 import { Text, View, TouchableOpacity, StyleSheet} from 'react-native'
@@ -12,10 +12,9 @@ const HistorialEntrenamiento = () => {
       
         const resultado = await reentrenar()
         var mensaje = resultado.message;
-      var reentrenamiento = resultado.solucion;
+     
         if(mensaje.includes('Exito')){
           swal("Enhorabuena", mensaje, "success");
-          navigation.navigate('HistorialEntrenamiento');
         }
         else{
           swal("Ha habido un error", mensaje, "error");
@@ -29,10 +28,11 @@ return(
       <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
       <Text styles={{fontWeight: 'bold'}}>Reentrenar el modelo</Text>
     </TouchableOpacity>
+    <Text style={{fontSize:"15"}} >Esta operación tardará unos cuantos segundos</Text>
     </Row>
-        <LayoutEntrenamiento>
+        <Layout>
         <EntrenamientoList/>
-        </LayoutEntrenamiento>
+        </Layout>
     </View>    
 )}  
 const styles = StyleSheet.create({

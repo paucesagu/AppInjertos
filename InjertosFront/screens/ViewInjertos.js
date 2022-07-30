@@ -111,10 +111,11 @@ const [injertos,setInjertos]= useState({
       var clasificacion = prediccion.clasificacion;
       clasificacion = clasificacion.toUpperCase();
       var probabilidad = prediccion.probabilidad;
+      probabilidad = parseFloat(probabilidad).toFixed(4);
       probabilidad = String(probabilidad*100) + "%"
       var mensajeCla = "El injerto es: " + clasificacion + " con una probabilidad de: " + probabilidad
     console.log(mensajeCla)
-      swal("Ehorabuena", mensajeCla, "success");
+      swal("Enhorabuena", mensajeCla, "success");
       if(localStorage.getItem("rol")=="usuario"){
         navigation.navigate('HomeScreenUsuario');
       }

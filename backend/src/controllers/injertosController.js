@@ -517,10 +517,10 @@ var acvhc = injerto[0].acvhc;
 var acvhbc = injerto[0].acvhbc;
 var dosisna = injerto[0].dosisna;
 var aminas = injerto[0].aminas;
-
+var id = req.params.id
 var params = `edad=${edad}&sexo=${sexo}&imc=${imc}&hta=${hta}&dm=${dm}&dlp=${dlp}&apm=${apm}&apq=${apq}&got=${got}&gpt=${gpt}&ggt=${ggt}&na=${na}&bbt=${bbt}&acvhc=${acvhc}&acvhbc=${acvhbc}&dosisna=${dosisna}&aminas=${aminas}&ecografia_1=${ecografia_1}&ecografia_2=${ecografia_2}&ecografia_3=${ecografia_3}`;
 //comprobamos que no hay ninguna valoracion para ese injerto especifico
-connection.query('SELECT * FROM valoraciones WHERE id_injerto = ?;', req.params.id, (err, result) => {
+connection.query('SELECT * FROM valoraciones WHERE id_injerto = ?;', id, (err, result) => {
   if(result.length!==0){ //existe una valoracion
     
       res.status(400).json({ message: "Este injerto ya tiene una valoración" });
@@ -547,12 +547,14 @@ connection.query('SELECT * FROM valoraciones WHERE id_injerto = ?;', req.params.
           var clasificacion = 0;
         }
         
-        var probabilidad = solucion['probabilidad'];
+        var probabilidad = parseFloat(solucion['probabilidad']);
+        probabilidad = probabilidad.toFixed(4);
         const connection = await getConnection();
         
         await connection.query("INSERT INTO valoraciones (validez, probabilidad, id_injerto, id_usuario) VALUES (?,?,?,?);",
         [clasificacion, probabilidad, req.params.id, usuario]);   
-        
+        var fecha = new Date();
+        await connection.query('UPDATE injertos set fecha=? WHERE id = ?', [fecha, id]);
           
         res.status(200).json({message: "Exito, se ha valorado correctamente", solucion});
         
