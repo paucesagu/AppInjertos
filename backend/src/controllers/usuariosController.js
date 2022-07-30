@@ -121,6 +121,7 @@ controller.getUsuarios = async (req, res) => {
 
   controller.editUser = async (req, res) => {
     try {
+      var dniAntes = req.params.dni;
       var dni = req.body.dni.toUpperCase();
       //var contraseña = req.body.contraseña;
       var nombre = req.body.nombre;
@@ -150,7 +151,7 @@ controller.getUsuarios = async (req, res) => {
       else{
                  
             var connection = await getConnection();
-            await connection.query('UPDATE usuarios set dni = ?, nombre = ?, apellidos = ?, telefono = ?, email = ?, rol = ? WHERE dni = ?', [dni, nombre, apellidos, telefono, email, rol, dni]);
+            await connection.query('UPDATE usuarios set dni = ?, nombre = ?, apellidos = ?, telefono = ?, email = ?, rol = ? WHERE dni = ?', [dni, nombre, apellidos, telefono, email, rol, dniAntes]);
             console.log('usuario modificado')
            
          
