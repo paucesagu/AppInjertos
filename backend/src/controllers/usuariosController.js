@@ -242,13 +242,19 @@ controller.modificarContraseña = async (req, res) => {
 };
 
 controller.deleteUsuario = async (req, res) => {
-  const connection = await getConnection();
+  try {
+    const connection = await getConnection();
   const result = await connection.query("DELETE FROM usuarios WHERE dni = ?", [
     req.params.dni.toUpperCase(),
   ]);
   console.log(result);
 
   res.status(200).json({ message: "Exito. Usuario eliminado" });
+    
+  } catch (error) {
+    res.status(400).json({ message: "El usuario no se ha podido eliminar" });
+  }
+  
 };
 
 

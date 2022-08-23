@@ -193,7 +193,5 @@ def index():
 
 if __name__ == '__main__':
     # Iniciamos el servidor
-    #context = ('./cert/cert2.pem', './cert/key2.pem') #Location of certificate & key
-    #app.run(port=4000, ssl_context=context) #Specify variable to run function
     print("Serving on port 8080")
     serve(app, listen='localhost:8080')
