@@ -25,7 +25,7 @@ controller.login = async (req, res) => {
                     //res.header("authorization",token).status(200).send(token);
                     res.header("authorization",token).status(200).send({message: "Exito. usuario loggeado", "token": token, "dni": dni});
                    } else {
-                    res.status(400).send({ message: "Usuario o contraseña incorrectos" });
+                    res.status(400).send({ message: "Contraseña incorrecta" });
                   }
                 });
               } else {

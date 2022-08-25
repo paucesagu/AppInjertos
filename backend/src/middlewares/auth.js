@@ -6,7 +6,7 @@ isAdmin (req, res, next) {
         next();
     }
     else{
-        res.status(400).json({message: "Usuario no es administrador"});
+        res.status(400).json({message: "No puede acceder a esta información"});
     }
 },
 isTheSameUserOrAdmin (req, res, next){
