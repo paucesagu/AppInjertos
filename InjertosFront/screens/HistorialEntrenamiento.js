@@ -22,7 +22,7 @@ const HistorialEntrenamiento = () => {
        
       }
 return(
-    <View style={{alignItems: 'center', backgroundColor: 'white'}}>
+    <View style={{alignItems: 'center', backgroundColor: 'white',width: '100%', height: '100%'}}>
     <Row style={{marginTop:15, padding:5}}>
       <Text style={{fontSize:"15", fontWeight:"bold"}} >Recuerde reinicar la aplicación en cada nuevo entrenamiento</Text>
       <TouchableOpacity style={styles.ButtonSave} onPress={handleSubmit}>
