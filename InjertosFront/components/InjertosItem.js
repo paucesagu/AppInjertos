@@ -25,9 +25,9 @@ const InjertosItem = ({injertos}) => {
     <View style={styles.item}>
      
       <View style={styles.container}>
-        <TouchableOpacity style={{paddingRight:30, textAlign: "left"}} onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})} >
+        <TouchableOpacity style={{paddingRight:30, textAlign: "left"}} 
+        onPress={() => navigation.navigate('ViewInjertos', {id: injertos.id})} >
           <View style={{flexDirection: 'row',display: 'block'}}>
-            
             <Text style={{fontWeight: 'bold'}}>ID: </Text>
             <Text style={{fontWeight: 'bold'}}> {injertos.id}</Text>
           </View>

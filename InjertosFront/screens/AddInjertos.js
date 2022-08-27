@@ -19,26 +19,25 @@ const AddInjertos = ({navigation, route}) => {
 
   const [injertos,setInjertos]= useState({
     edad:"",
-  sexo:"", 
-  imc:"",
-  hta:"",
-  dm:"",
-  dlp:"",
-  apm:"",
-  apq:"",
-  got:"",
-  gpt:"",
-  ggt:"",
-  na:"",
-  bbt:"",
-  acvhc:"",
-  acvhbc:"",
-  aminas:"",
-  dosisna:"",
-  ecografia:""
+    sexo:"", 
+    imc:"",
+    hta:"",
+    dm:"",
+    dlp:"",
+    apm:"",
+    apq:"",
+    got:"",
+    gpt:"",
+    ggt:"",
+    na:"",
+    bbt:"",
+    acvhc:"",
+    acvhbc:"",
+    aminas:"",
+    dosisna:"",
+    ecografia:""});
 
-  });
-
+    console.log(injertos);
   //Obtener valor de SEXO del SELECT
   const [value, setSexo] = useState({
     value:null
@@ -62,7 +61,6 @@ const AddInjertos = ({navigation, route}) => {
   const handleSubmit = async () => {
 
     injertos.sexo=value.value
-    console.log(injertos)
 
     var resultado = await crearInjerto(injertos)
     if(resultado.includes("Exito") && localStorage.getItem("rol")=="usuario" ){

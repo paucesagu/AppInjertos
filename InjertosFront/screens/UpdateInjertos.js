@@ -244,7 +244,7 @@ else{
     fontSize:20, 
     padding:10,
     textAlign: 'center',
-    }}>Rellene todos los campos para poder añadir correctamente un Injerto.</Container>
+    }}>Rellene todos los campos para poder añadir modificar correctamente un Injerto.</Container>
     </Row>
     <View style={{alignItems: 'center'}}>
 

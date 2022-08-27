@@ -4,9 +4,9 @@ import { getUser } from "../api"
 import { editarUsuario } from "../api"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
 import swal from 'sweetalert'
-import { FontAwesome5 } from '@expo/vector-icons';
+
 
 const MiPerfil = ({navigation, route}) => {
 
@@ -130,15 +130,16 @@ const MiPerfil = ({navigation, route}) => {
       </Row>
       <Row>
         <TouchableOpacity style={styles.ButtonSave} onPress={handleVolver}>
-        <AntDesign name="back" size={30} color="black" /> <Text styles={{fontWeight: 'bold'}}>Volver</Text>
+        <AntDesign name="back" size={30} color="black" /> 
+        <Text styles={{fontWeight: 'bold', marginLeft:4}}>Volver</Text>
         </TouchableOpacity> 
         
       </Row>
       <Row> 
         <View style={{width: '100%'}}>
         <TouchableOpacity style={styles.ButtonSave} onPress={handleEditar}>
-          <FontAwesome5 name="user-edit" size={24} color="black" />
-          <Text styles={{fontWeight: 'bold', marginLeft:4}}>Editar</Text>
+          <FontAwesome5 name="user-edit" size={30} color="black" />
+          <Text styles={{fontWeight: 'bold', marginLeft:8}}>Editar</Text>
         </TouchableOpacity>
         </View>
         </Row>

@@ -26,6 +26,7 @@ const HomeScreen = () => {
       backgroundColor:'#9af88c',
       width:'100%',
       textAlign:'center',
+      width: '100%', height: '100%'
     
     }
     

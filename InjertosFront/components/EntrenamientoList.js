@@ -41,7 +41,7 @@ console.log(entrenamientos);
   const itemWidth = (width - 15) / 2;
   
   return (
-    <View style={{backgroundColor:"white"}}>
+    <View style={{backgroundColor:"white",width: '100%', height: '100%'}}>
 <TouchableOpacity style={{display: 'block'}} onPress={loadEntrenamientos}>
         <EvilIcons name="refresh" size={24} color="black" />
         <Text styles={{fontWeight: 'bold'}}>Actualizar</Text>

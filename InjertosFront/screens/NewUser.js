@@ -60,7 +60,7 @@ const NewUser = ({navigation, route}) => {
   return (
     <View style={{alignItems: 'center',
   justifyContent: 'center',
-  textAlign:'left',}}>
+  textAlign:'left',backgroundColor: 'white',width: '100%', height: '100%'}}>
     <Row>
     <Container style={{backgroundColor: 'white', 
     marginTop: '10px',
